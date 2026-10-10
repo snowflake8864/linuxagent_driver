@@ -1,0 +1,96 @@
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+*.o.d
+# Fortran module files
+*.mod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+*.cmd
+MagicArmor_*
+osec_base.ko*
+common/dependlibs*
+dependlibs/*
+*.o
+*.cmd
+output
+
+Cache/*
+CachedData/*
+clp/*
+logs/*
+Service Worker/*
+User/History/*
+User/workspaceStorage/*
+CachedExtensionVSIXs/*
+Code Cache/*
+User/globalStorage/ms-vscode-remote.remote-containers/*
+
+Cookies-journal
+GPUCache/data_0
+Crashpad/client_id
+GPUCache/data_1
+GPUCache/data_2
+code.lock
+
+Cookies
+Crashpad/settings.dat
+Local Storage
+databases/Databases.db
+GPUCache/data_3
+GPUCache/index
+clean
+languagepacks.json
+machineid
+Network Persistent State
+Preferences
+TransportSecurity
+CachedExtensions
+databases
+Dictionaries
+Session Storage/*
+Session Storage/MANIFEST-000001
+User/globalStorage/state.vscdb
+WebStorage
+User/globalStorage/storage.json
+User/globalStorage/state.vscdb.backup
+CachedProfilesData/__default__profile__/extensions.builtin.cache
+backend/test
+CachedProfilesData/__default__profile__/extensions.user.cache
+kernel/con_kernel/modules.order
+kernel/con_kernel/modules.order
+kernel/con_kernel/osec_base.mod.c
+kernel/con_kernel/.cache.mk
+kernel/con_kernel/modules.order
+kernel/con_kernel/core/flag_cache.o.ur-safe
+kernel/con_kernel/hold/ksyscall_hold.o.ur-safe
+kernel/con_kernel/netlink/netlink.o.ur-safe
+kernel/con_kernel/utils/kosecs_core.o.ur-safe
+kernel/con_kernel/modules.order
+Backups
+User/globalStorage/mhutchie.git-graph/life-cycle.json
+package/deb/packdir/opt/osec/net_info_ver.ini
+package/deb/packdir/DEBIAN/control
+build_x64.sh
+package/rpm/BUILDROOT/opt/osec/net_info_ver.ini
+.vscode/settings.json

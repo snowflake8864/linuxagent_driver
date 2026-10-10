@@ -1,0 +1,8 @@
+core-objs += core/flag_cache.o 
+core-objs += core/gnkernel.o 
+core-objs += core/cmd_handler.o 
+core-objs += core/proto.o 
+core-objs += core/cpu.o 
+core-objs += core/zcopy.o 
+
+vd_kernel-objs += $(core-objs)

@@ -1,0 +1,4 @@
+abnormal-objs += json/cJSON.o
+abnormal-objs += json/js_util.o
+
+#vd_kernel-objs += $(abnormal-objs)

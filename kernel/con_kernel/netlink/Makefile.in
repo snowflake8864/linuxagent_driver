@@ -1,0 +1,2 @@
+netlink-objs += netlink/netlink.o 
+vd_kernel-objs += $(netlink-objs)

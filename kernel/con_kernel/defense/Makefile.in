@@ -1,0 +1,11 @@
+defense-objs += defense/defense_hook.o 
+defense-objs += defense/path_security.o
+defense-objs += defense/defense_policy.o
+defense-objs += defense/defense_sysfs.o
+defense-objs += defense/defense_lsm.o
+defense-objs += defense/defense_task.o
+defense-objs += defense/defense_fake.o
+defense-objs += defense/defense_action.o
+defense-objs += defense/network_dos.o
+
+vd_kernel-objs += $(defense-objs)

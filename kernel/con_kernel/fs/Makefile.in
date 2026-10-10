@@ -1,0 +1,9 @@
+fs-objs +=fs/file_access.o
+fs-objs +=fs/open.o fs/namei.o
+fs-objs +=fs/sock.o
+fs-objs +=fs/fs_core.o
+fs-objs +=fs/mount.o
+fs-objs +=fs/pipe.o
+fs-objs +=fs/module.o
+
+vd_kernel-objs += $(fs-objs)

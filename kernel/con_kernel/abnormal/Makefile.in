@@ -1,0 +1,3 @@
+abnormal-objs += abnormal/abnormal.o
+
+vd_kernel-objs += $(abnormal-objs)

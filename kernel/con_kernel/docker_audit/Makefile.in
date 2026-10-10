@@ -1,0 +1,2 @@
+docker_audit-objs += docker_audit/docker_rules.o 
+vd_kernel-objs += $(docker_audit-objs)

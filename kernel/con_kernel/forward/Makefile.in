@@ -1,0 +1,3 @@
+forward-objs += forward/forward.o 
+forward-objs += forward/session.o 
+vd_kernel-objs += $(forward-objs)

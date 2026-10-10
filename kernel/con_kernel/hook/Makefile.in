@@ -1,0 +1,4 @@
+hook-objs += hook/hook.o 
+hook-objs += hook/pks/pks_wp.o
+
+vd_kernel-objs += $(hook-objs)

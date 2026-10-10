@@ -1,0 +1,31 @@
+kvd-objs += $(KVDDIR)/hook/kvd_hook.o 
+
+kvd-objs += $(KVDDIR)/hook/ksyscall_hook.o 
+kvd-objs += $(KVDDIR)/hook/hook_ksyms.o 
+kvd-objs += $(KVDDIR)/hook/sysmap.o
+kvd-objs += $(KVDDIR)/hook/syscall_name.o
+kvd-objs += $(KVDDIR)/hook/kallsyms.o
+kvd-objs += $(KVDDIR)/hook/arch/hook_arch.o
+kvd-objs += $(KVDDIR)/hook/hook_ops.o
+kvd-objs += $(KVDDIR)/hook/kvd_syscalls.o 
+
+kvd_core-objs += $(KVDDIR)/core/kvd_version.o 
+kvd_core-objs += $(KVDDIR)/core/kvd_blm.o
+kvd_core-objs += $(KVDDIR)/core/kvd_memcache.o 
+kvd_core-objs += $(KVDDIR)/core/kvd_core.o 
+kvd_core-objs += $(KVDDIR)/core/khookframe.o 
+
+kvd_lsm-objs += $(KVDDIR)/lsm/kvd_lsm.o
+kvd_commlsm-objs += $(KVDDIR)/lsm/kvd_commlsm.o
+kvd_exec-objs += $(KVDDIR)/exec/exec_fake.o
+
+kvd_kernel-objs += $(kvd-objs)
+kvd_kernel-objs += $(kvd_test-objs)
+
+kvd_kernel-objs += $(kvd_lsm-objs)
+kvd_kernel-objs += $(kvd_core-objs)
+kvd_kernel-objs += $(kvd_sysfs-objs)
+
+kvd_kernel-objs += $(kvd_commlsm-objs)
+kvd_kernel-objs += $(kvd_exec-objs)
+kvd_kernel-objs += $(kvd_fs-objs)

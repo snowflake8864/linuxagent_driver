@@ -1,0 +1,929 @@
+
+kernel/con_kernel/process_audit/process_rules.o:     file format elf64-x86-64
+
+
+Disassembly of section .text:
+
+0000000000000000 <__pfx_get_file_mtime>:
+   0:	90                   	nop
+   1:	90                   	nop
+   2:	90                   	nop
+   3:	90                   	nop
+   4:	90                   	nop
+   5:	90                   	nop
+   6:	90                   	nop
+   7:	90                   	nop
+   8:	90                   	nop
+   9:	90                   	nop
+   a:	90                   	nop
+   b:	90                   	nop
+   c:	90                   	nop
+   d:	90                   	nop
+   e:	90                   	nop
+   f:	90                   	nop
+
+0000000000000010 <get_file_mtime>:
+  10:	e8 00 00 00 00       	call   15 <get_file_mtime+0x5>
+  15:	55                   	push   %rbp
+  16:	b9 14 00 00 00       	mov    $0x14,%ecx
+  1b:	be 01 00 00 00       	mov    $0x1,%esi
+  20:	48 89 e5             	mov    %rsp,%rbp
+  23:	41 54                	push   %r12
+  25:	53                   	push   %rbx
+  26:	4c 8d a5 48 ff ff ff 	lea    -0xb8(%rbp),%r12
+  2d:	48 89 fb             	mov    %rdi,%rbx
+  30:	48 8d 95 38 ff ff ff 	lea    -0xc8(%rbp),%rdx
+  37:	4c 89 e7             	mov    %r12,%rdi
+  3a:	48 81 ec b8 00 00 00 	sub    $0xb8,%rsp
+  41:	65 48 8b 04 25 28 00 	mov    %gs:0x28,%rax
+  48:	00 00 
+  4a:	48 89 45 e8          	mov    %rax,-0x18(%rbp)
+  4e:	31 c0                	xor    %eax,%eax
+  50:	48 c7 85 38 ff ff ff 	movq   $0x0,-0xc8(%rbp)
+  57:	00 00 00 00 
+  5b:	48 c7 85 40 ff ff ff 	movq   $0x0,-0xc0(%rbp)
+  62:	00 00 00 00 
+  66:	f3 48 ab             	rep stos %rax,%es:(%rdi)
+  69:	48 89 df             	mov    %rbx,%rdi
+  6c:	e8 00 00 00 00       	call   71 <get_file_mtime+0x61>
+  71:	85 c0                	test   %eax,%eax
+  73:	0f 85 82 00 00 00    	jne    fb <get_file_mtime+0xeb>
+  79:	31 c9                	xor    %ecx,%ecx
+  7b:	ba ff 07 00 00       	mov    $0x7ff,%edx
+  80:	4c 89 e6             	mov    %r12,%rsi
+  83:	48 8d bd 38 ff ff ff 	lea    -0xc8(%rbp),%rdi
+  8a:	e8 00 00 00 00       	call   8f <get_file_mtime+0x7f>
+  8f:	85 c0                	test   %eax,%eax
+  91:	75 3a                	jne    cd <get_file_mtime+0xbd>
+  93:	48 8d bd 38 ff ff ff 	lea    -0xc8(%rbp),%rdi
+  9a:	e8 00 00 00 00       	call   9f <get_file_mtime+0x8f>
+  9f:	48 8b 45 98          	mov    -0x68(%rbp),%rax
+  a3:	48 8b 55 e8          	mov    -0x18(%rbp),%rdx
+  a7:	65 48 2b 14 25 28 00 	sub    %gs:0x28,%rdx
+  ae:	00 00 
+  b0:	75 6b                	jne    11d <get_file_mtime+0x10d>
+  b2:	48 81 c4 b8 00 00 00 	add    $0xb8,%rsp
+  b9:	5b                   	pop    %rbx
+  ba:	41 5c                	pop    %r12
+  bc:	5d                   	pop    %rbp
+  bd:	31 d2                	xor    %edx,%edx
+  bf:	31 c9                	xor    %ecx,%ecx
+  c1:	31 f6                	xor    %esi,%esi
+  c3:	31 ff                	xor    %edi,%edi
+  c5:	45 31 c0             	xor    %r8d,%r8d
+  c8:	e9 00 00 00 00       	jmp    cd <get_file_mtime+0xbd>
+  cd:	41 89 c0             	mov    %eax,%r8d
+  d0:	48 89 d9             	mov    %rbx,%rcx
+  d3:	ba 41 00 00 00       	mov    $0x41,%edx
+  d8:	48 c7 c6 00 00 00 00 	mov    $0x0,%rsi
+  df:	48 c7 c7 00 00 00 00 	mov    $0x0,%rdi
+  e6:	e8 00 00 00 00       	call   eb <get_file_mtime+0xdb>
+  eb:	48 8d bd 38 ff ff ff 	lea    -0xc8(%rbp),%rdi
+  f2:	e8 00 00 00 00       	call   f7 <get_file_mtime+0xe7>
+  f7:	31 c0                	xor    %eax,%eax
+  f9:	eb a8                	jmp    a3 <get_file_mtime+0x93>
+  fb:	41 89 c0             	mov    %eax,%r8d
+  fe:	48 89 d9             	mov    %rbx,%rcx
+ 101:	ba 34 00 00 00       	mov    $0x34,%edx
+ 106:	48 c7 c6 00 00 00 00 	mov    $0x0,%rsi
+ 10d:	48 c7 c7 00 00 00 00 	mov    $0x0,%rdi
+ 114:	e8 00 00 00 00       	call   119 <get_file_mtime+0x109>
+ 119:	31 c0                	xor    %eax,%eax
+ 11b:	eb 86                	jmp    a3 <get_file_mtime+0x93>
+ 11d:	e8 00 00 00 00       	call   122 <get_file_mtime+0x112>
+ 122:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+ 129:	00 00 00 00 
+ 12d:	0f 1f 00             	nopl   (%rax)
+
+0000000000000130 <__pfx___process_rules_build>:
+ 130:	90                   	nop
+ 131:	90                   	nop
+ 132:	90                   	nop
+ 133:	90                   	nop
+ 134:	90                   	nop
+ 135:	90                   	nop
+ 136:	90                   	nop
+ 137:	90                   	nop
+ 138:	90                   	nop
+ 139:	90                   	nop
+ 13a:	90                   	nop
+ 13b:	90                   	nop
+ 13c:	90                   	nop
+ 13d:	90                   	nop
+ 13e:	90                   	nop
+ 13f:	90                   	nop
+
+0000000000000140 <__process_rules_build>:
+ 140:	e8 00 00 00 00       	call   145 <__process_rules_build+0x5>
+ 145:	55                   	push   %rbp
+ 146:	48 89 f2             	mov    %rsi,%rdx
+ 149:	31 f6                	xor    %esi,%esi
+ 14b:	48 89 e5             	mov    %rsp,%rbp
+ 14e:	e8 00 00 00 00       	call   153 <__process_rules_build+0x13>
+ 153:	31 c0                	xor    %eax,%eax
+ 155:	5d                   	pop    %rbp
+ 156:	31 d2                	xor    %edx,%edx
+ 158:	31 f6                	xor    %esi,%esi
+ 15a:	31 ff                	xor    %edi,%edi
+ 15c:	e9 00 00 00 00       	jmp    161 <__process_rules_build+0x21>
+ 161:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+ 168:	00 00 00 00 
+ 16c:	0f 1f 40 00          	nopl   0x0(%rax)
+
+0000000000000170 <__pfx__full_name_hash>:
+ 170:	90                   	nop
+ 171:	90                   	nop
+ 172:	90                   	nop
+ 173:	90                   	nop
+ 174:	90                   	nop
+ 175:	90                   	nop
+ 176:	90                   	nop
+ 177:	90                   	nop
+ 178:	90                   	nop
+ 179:	90                   	nop
+ 17a:	90                   	nop
+ 17b:	90                   	nop
+ 17c:	90                   	nop
+ 17d:	90                   	nop
+ 17e:	90                   	nop
+ 17f:	90                   	nop
+
+0000000000000180 <_full_name_hash>:
+ 180:	e8 00 00 00 00       	call   185 <_full_name_hash+0x5>
+ 185:	55                   	push   %rbp
+ 186:	0f b6 17             	movzbl (%rdi),%edx
+ 189:	48 89 e5             	mov    %rsp,%rbp
+ 18c:	84 d2                	test   %dl,%dl
+ 18e:	74 30                	je     1c0 <_full_name_hash+0x40>
+ 190:	48 8d 4f 01          	lea    0x1(%rdi),%rcx
+ 194:	b8 05 15 00 00       	mov    $0x1505,%eax
+ 199:	48 89 c6             	mov    %rax,%rsi
+ 19c:	48 83 c1 01          	add    $0x1,%rcx
+ 1a0:	48 c1 e6 05          	shl    $0x5,%rsi
+ 1a4:	48 01 f0             	add    %rsi,%rax
+ 1a7:	48 01 d0             	add    %rdx,%rax
+ 1aa:	0f b6 51 ff          	movzbl -0x1(%rcx),%edx
+ 1ae:	84 d2                	test   %dl,%dl
+ 1b0:	75 e7                	jne    199 <_full_name_hash+0x19>
+ 1b2:	5d                   	pop    %rbp
+ 1b3:	31 d2                	xor    %edx,%edx
+ 1b5:	31 c9                	xor    %ecx,%ecx
+ 1b7:	31 f6                	xor    %esi,%esi
+ 1b9:	31 ff                	xor    %edi,%edi
+ 1bb:	e9 00 00 00 00       	jmp    1c0 <_full_name_hash+0x40>
+ 1c0:	b8 05 15 00 00       	mov    $0x1505,%eax
+ 1c5:	5d                   	pop    %rbp
+ 1c6:	31 d2                	xor    %edx,%edx
+ 1c8:	31 c9                	xor    %ecx,%ecx
+ 1ca:	31 f6                	xor    %esi,%esi
+ 1cc:	31 ff                	xor    %edi,%edi
+ 1ce:	e9 00 00 00 00       	jmp    1d3 <_full_name_hash+0x53>
+ 1d3:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+ 1da:	00 00 00 00 
+ 1de:	66 90                	xchg   %ax,%ax
+
+00000000000001e0 <__pfx_add_or_update_audit_process_info>:
+ 1e0:	90                   	nop
+ 1e1:	90                   	nop
+ 1e2:	90                   	nop
+ 1e3:	90                   	nop
+ 1e4:	90                   	nop
+ 1e5:	90                   	nop
+ 1e6:	90                   	nop
+ 1e7:	90                   	nop
+ 1e8:	90                   	nop
+ 1e9:	90                   	nop
+ 1ea:	90                   	nop
+ 1eb:	90                   	nop
+ 1ec:	90                   	nop
+ 1ed:	90                   	nop
+ 1ee:	90                   	nop
+ 1ef:	90                   	nop
+
+00000000000001f0 <add_or_update_audit_process_info>:
+ 1f0:	e8 00 00 00 00       	call   1f5 <add_or_update_audit_process_info+0x5>
+ 1f5:	55                   	push   %rbp
+ 1f6:	48 89 e5             	mov    %rsp,%rbp
+ 1f9:	41 57                	push   %r15
+ 1fb:	49 89 f7             	mov    %rsi,%r15
+ 1fe:	41 56                	push   %r14
+ 200:	49 89 fe             	mov    %rdi,%r14
+ 203:	41 55                	push   %r13
+ 205:	41 54                	push   %r12
+ 207:	53                   	push   %rbx
+ 208:	0f b6 07             	movzbl (%rdi),%eax
+ 20b:	89 d3                	mov    %edx,%ebx
+ 20d:	84 c0                	test   %al,%al
+ 20f:	0f 84 c6 01 00 00    	je     3db <add_or_update_audit_process_info+0x1eb>
+ 215:	48 8d 4f 01          	lea    0x1(%rdi),%rcx
+ 219:	41 bc 05 15 00 00    	mov    $0x1505,%r12d
+ 21f:	4c 89 e2             	mov    %r12,%rdx
+ 222:	48 83 c1 01          	add    $0x1,%rcx
+ 226:	48 c1 e2 05          	shl    $0x5,%rdx
+ 22a:	4c 01 e2             	add    %r12,%rdx
+ 22d:	4c 8d 24 10          	lea    (%rax,%rdx,1),%r12
+ 231:	0f b6 41 ff          	movzbl -0x1(%rcx),%eax
+ 235:	84 c0                	test   %al,%al
+ 237:	75 e6                	jne    21f <add_or_update_audit_process_info+0x2f>
+ 239:	48 c7 c7 00 00 00 00 	mov    $0x0,%rdi
+ 240:	e8 00 00 00 00       	call   245 <add_or_update_audit_process_info+0x55>
+ 245:	4c 89 e6             	mov    %r12,%rsi
+ 248:	48 c7 c7 00 00 00 00 	mov    $0x0,%rdi
+ 24f:	e8 00 00 00 00       	call   254 <add_or_update_audit_process_info+0x64>
+ 254:	49 89 c5             	mov    %rax,%r13
+ 257:	48 85 c0             	test   %rax,%rax
+ 25a:	0f 84 9b 00 00 00    	je     2fb <add_or_update_audit_process_info+0x10b>
+ 260:	31 c0                	xor    %eax,%eax
+ 262:	49 83 3f 00          	cmpq   $0x0,(%r15)
+ 266:	0f 95 c0             	setne  %al
+ 269:	49 39 85 00 01 00 00 	cmp    %rax,0x100(%r13)
+ 270:	74 70                	je     2e2 <add_or_update_audit_process_info+0xf2>
+ 272:	49 8b 07             	mov    (%r15),%rax
+ 275:	49 89 85 00 01 00 00 	mov    %rax,0x100(%r13)
+ 27c:	49 8b 47 08          	mov    0x8(%r15),%rax
+ 280:	49 89 85 08 01 00 00 	mov    %rax,0x108(%r13)
+ 287:	4c 89 f7             	mov    %r14,%rdi
+ 28a:	83 e3 07             	and    $0x7,%ebx
+ 28d:	e8 7e fd ff ff       	call   10 <get_file_mtime>
+ 292:	49 89 85 20 01 00 00 	mov    %rax,0x120(%r13)
+ 299:	41 0f b6 85 10 01 00 	movzbl 0x110(%r13),%eax
+ 2a0:	00 
+ 2a1:	83 e0 f8             	and    $0xfffffff8,%eax
+ 2a4:	09 c3                	or     %eax,%ebx
+ 2a6:	48 8b 05 00 00 00 00 	mov    0x0(%rip),%rax        # 2ad <add_or_update_audit_process_info+0xbd>
+ 2ad:	41 88 9d 10 01 00 00 	mov    %bl,0x110(%r13)
+ 2b4:	49 89 85 18 01 00 00 	mov    %rax,0x118(%r13)
+ 2bb:	31 db                	xor    %ebx,%ebx
+ 2bd:	48 c7 c7 00 00 00 00 	mov    $0x0,%rdi
+ 2c4:	e8 00 00 00 00       	call   2c9 <add_or_update_audit_process_info+0xd9>
+ 2c9:	89 d8                	mov    %ebx,%eax
+ 2cb:	5b                   	pop    %rbx
+ 2cc:	41 5c                	pop    %r12
+ 2ce:	41 5d                	pop    %r13
+ 2d0:	41 5e                	pop    %r14
+ 2d2:	41 5f                	pop    %r15
+ 2d4:	5d                   	pop    %rbp
+ 2d5:	31 d2                	xor    %edx,%edx
+ 2d7:	31 c9                	xor    %ecx,%ecx
+ 2d9:	31 f6                	xor    %esi,%esi
+ 2db:	31 ff                	xor    %edi,%edi
+ 2dd:	e9 00 00 00 00       	jmp    2e2 <add_or_update_audit_process_info+0xf2>
+ 2e2:	31 c0                	xor    %eax,%eax
+ 2e4:	49 83 7f 08 00       	cmpq   $0x0,0x8(%r15)
+ 2e9:	0f 95 c0             	setne  %al
+ 2ec:	49 39 85 08 01 00 00 	cmp    %rax,0x108(%r13)
+ 2f3:	0f 85 79 ff ff ff    	jne    272 <add_or_update_audit_process_info+0x82>
+ 2f9:	eb 8c                	jmp    287 <add_or_update_audit_process_info+0x97>
+ 2fb:	48 8b 3d 00 00 00 00 	mov    0x0(%rip),%rdi        # 302 <add_or_update_audit_process_info+0x112>
+ 302:	be c0 0d 00 00       	mov    $0xdc0,%esi
+ 307:	e8 00 00 00 00       	call   30c <add_or_update_audit_process_info+0x11c>
+ 30c:	49 89 c5             	mov    %rax,%r13
+ 30f:	48 85 c0             	test   %rax,%rax
+ 312:	0f 84 f1 00 00 00    	je     409 <add_or_update_audit_process_info+0x219>
+ 318:	4c 89 f6             	mov    %r14,%rsi
+ 31b:	ba ff 00 00 00       	mov    $0xff,%edx
+ 320:	48 89 c7             	mov    %rax,%rdi
+ 323:	83 e3 07             	and    $0x7,%ebx
+ 326:	e8 00 00 00 00       	call   32b <add_or_update_audit_process_info+0x13b>
+ 32b:	49 8b 07             	mov    (%r15),%rax
+ 32e:	48 8b 15 00 00 00 00 	mov    0x0(%rip),%rdx        # 335 <add_or_update_audit_process_info+0x145>
+ 335:	4c 89 f7             	mov    %r14,%rdi
+ 338:	41 c6 85 ff 00 00 00 	movb   $0x0,0xff(%r13)
+ 33f:	00 
+ 340:	49 89 85 00 01 00 00 	mov    %rax,0x100(%r13)
+ 347:	49 8b 47 08          	mov    0x8(%r15),%rax
+ 34b:	49 89 95 18 01 00 00 	mov    %rdx,0x118(%r13)
+ 352:	49 89 85 08 01 00 00 	mov    %rax,0x108(%r13)
+ 359:	41 0f b6 85 10 01 00 	movzbl 0x110(%r13),%eax
+ 360:	00 
+ 361:	83 e0 f8             	and    $0xfffffff8,%eax
+ 364:	09 d8                	or     %ebx,%eax
+ 366:	41 88 85 10 01 00 00 	mov    %al,0x110(%r13)
+ 36d:	83 e0 f7             	and    $0xfffffff7,%eax
+ 370:	41 88 85 10 01 00 00 	mov    %al,0x110(%r13)
+ 377:	e8 94 fc ff ff       	call   10 <get_file_mtime>
+ 37c:	4c 89 ea             	mov    %r13,%rdx
+ 37f:	4c 89 e6             	mov    %r12,%rsi
+ 382:	48 c7 c7 00 00 00 00 	mov    $0x0,%rdi
+ 389:	49 89 85 20 01 00 00 	mov    %rax,0x120(%r13)
+ 390:	e8 00 00 00 00       	call   395 <add_or_update_audit_process_info+0x1a5>
+ 395:	89 c3                	mov    %eax,%ebx
+ 397:	85 c0                	test   %eax,%eax
+ 399:	75 4b                	jne    3e6 <add_or_update_audit_process_info+0x1f6>
+ 39b:	48 8b 3d 00 00 00 00 	mov    0x0(%rip),%rdi        # 3a2 <add_or_update_audit_process_info+0x1b2>
+ 3a2:	be c0 0d 00 00       	mov    $0xdc0,%esi
+ 3a7:	e8 00 00 00 00       	call   3ac <add_or_update_audit_process_info+0x1bc>
+ 3ac:	48 85 c0             	test   %rax,%rax
+ 3af:	74 49                	je     3fa <add_or_update_audit_process_info+0x20a>
+ 3b1:	48 8b 0d 00 00 00 00 	mov    0x0(%rip),%rcx        # 3b8 <add_or_update_audit_process_info+0x1c8>
+ 3b8:	48 8d 50 08          	lea    0x8(%rax),%rdx
+ 3bc:	4c 89 20             	mov    %r12,(%rax)
+ 3bf:	48 89 15 00 00 00 00 	mov    %rdx,0x0(%rip)        # 3c6 <add_or_update_audit_process_info+0x1d6>
+ 3c6:	48 89 51 08          	mov    %rdx,0x8(%rcx)
+ 3ca:	48 89 48 08          	mov    %rcx,0x8(%rax)
+ 3ce:	48 c7 40 10 00 00 00 	movq   $0x0,0x10(%rax)
+ 3d5:	00 
+ 3d6:	e9 e0 fe ff ff       	jmp    2bb <add_or_update_audit_process_info+0xcb>
+ 3db:	41 bc 05 15 00 00    	mov    $0x1505,%r12d
+ 3e1:	e9 53 fe ff ff       	jmp    239 <add_or_update_audit_process_info+0x49>
+ 3e6:	48 8b 3d 00 00 00 00 	mov    0x0(%rip),%rdi        # 3ed <add_or_update_audit_process_info+0x1fd>
+ 3ed:	4c 89 ee             	mov    %r13,%rsi
+ 3f0:	e8 00 00 00 00       	call   3f5 <add_or_update_audit_process_info+0x205>
+ 3f5:	e9 c3 fe ff ff       	jmp    2bd <add_or_update_audit_process_info+0xcd>
+ 3fa:	48 8b 3d 00 00 00 00 	mov    0x0(%rip),%rdi        # 401 <add_or_update_audit_process_info+0x211>
+ 401:	4c 89 ee             	mov    %r13,%rsi
+ 404:	e8 00 00 00 00       	call   409 <add_or_update_audit_process_info+0x219>
+ 409:	48 c7 c7 00 00 00 00 	mov    $0x0,%rdi
+ 410:	bb f4 ff ff ff       	mov    $0xfffffff4,%ebx
+ 415:	e8 00 00 00 00       	call   41a <add_or_update_audit_process_info+0x22a>
+ 41a:	e9 aa fe ff ff       	jmp    2c9 <add_or_update_audit_process_info+0xd9>
+ 41f:	90                   	nop
+
+0000000000000420 <__pfx_get_process_audit_info>:
+ 420:	90                   	nop
+ 421:	90                   	nop
+ 422:	90                   	nop
+ 423:	90                   	nop
+ 424:	90                   	nop
+ 425:	90                   	nop
+ 426:	90                   	nop
+ 427:	90                   	nop
+ 428:	90                   	nop
+ 429:	90                   	nop
+ 42a:	90                   	nop
+ 42b:	90                   	nop
+ 42c:	90                   	nop
+ 42d:	90                   	nop
+ 42e:	90                   	nop
+ 42f:	90                   	nop
+
+0000000000000430 <get_process_audit_info>:
+ 430:	e8 00 00 00 00       	call   435 <get_process_audit_info+0x5>
+ 435:	55                   	push   %rbp
+ 436:	48 89 e5             	mov    %rsp,%rbp
+ 439:	53                   	push   %rbx
+ 43a:	0f b6 07             	movzbl (%rdi),%eax
+ 43d:	84 c0                	test   %al,%al
+ 43f:	0f 84 a4 00 00 00    	je     4e9 <get_process_audit_info+0xb9>
+ 445:	48 8d 57 01          	lea    0x1(%rdi),%rdx
+ 449:	bb 05 15 00 00       	mov    $0x1505,%ebx
+ 44e:	48 89 d9             	mov    %rbx,%rcx
+ 451:	48 83 c2 01          	add    $0x1,%rdx
+ 455:	48 c1 e1 05          	shl    $0x5,%rcx
+ 459:	48 01 cb             	add    %rcx,%rbx
+ 45c:	48 01 c3             	add    %rax,%rbx
+ 45f:	0f b6 42 ff          	movzbl -0x1(%rdx),%eax
+ 463:	84 c0                	test   %al,%al
+ 465:	75 e7                	jne    44e <get_process_audit_info+0x1e>
+ 467:	48 c7 c7 00 00 00 00 	mov    $0x0,%rdi
+ 46e:	e8 00 00 00 00       	call   473 <get_process_audit_info+0x43>
+ 473:	48 89 de             	mov    %rbx,%rsi
+ 476:	48 c7 c7 00 00 00 00 	mov    $0x0,%rdi
+ 47d:	e8 00 00 00 00       	call   482 <get_process_audit_info+0x52>
+ 482:	48 89 c3             	mov    %rax,%rbx
+ 485:	48 85 c0             	test   %rax,%rax
+ 488:	74 3e                	je     4c8 <get_process_audit_info+0x98>
+ 48a:	48 8b 05 00 00 00 00 	mov    0x0(%rip),%rax        # 491 <get_process_audit_info+0x61>
+ 491:	48 2b 83 18 01 00 00 	sub    0x118(%rbx),%rax
+ 498:	48 3d 88 13 00 00    	cmp    $0x1388,%rax
+ 49e:	0f b6 83 10 01 00 00 	movzbl 0x110(%rbx),%eax
+ 4a5:	0f 97 c2             	seta   %dl
+ 4a8:	c1 e2 03             	shl    $0x3,%edx
+ 4ab:	83 e0 f7             	and    $0xfffffff7,%eax
+ 4ae:	09 d0                	or     %edx,%eax
+ 4b0:	88 83 10 01 00 00    	mov    %al,0x110(%rbx)
+ 4b6:	a8 08                	test   $0x8,%al
+ 4b8:	74 0e                	je     4c8 <get_process_audit_info+0x98>
+ 4ba:	48 8b 05 00 00 00 00 	mov    0x0(%rip),%rax        # 4c1 <get_process_audit_info+0x91>
+ 4c1:	48 89 83 18 01 00 00 	mov    %rax,0x118(%rbx)
+ 4c8:	48 c7 c7 00 00 00 00 	mov    $0x0,%rdi
+ 4cf:	e8 00 00 00 00       	call   4d4 <get_process_audit_info+0xa4>
+ 4d4:	48 89 d8             	mov    %rbx,%rax
+ 4d7:	48 8b 5d f8          	mov    -0x8(%rbp),%rbx
+ 4db:	c9                   	leave
+ 4dc:	31 d2                	xor    %edx,%edx
+ 4de:	31 c9                	xor    %ecx,%ecx
+ 4e0:	31 f6                	xor    %esi,%esi
+ 4e2:	31 ff                	xor    %edi,%edi
+ 4e4:	e9 00 00 00 00       	jmp    4e9 <get_process_audit_info+0xb9>
+ 4e9:	bb 05 15 00 00       	mov    $0x1505,%ebx
+ 4ee:	e9 74 ff ff ff       	jmp    467 <get_process_audit_info+0x37>
+ 4f3:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+ 4fa:	00 00 00 00 
+ 4fe:	66 90                	xchg   %ax,%ax
+
+0000000000000500 <__pfx_get_process_md5>:
+ 500:	90                   	nop
+ 501:	90                   	nop
+ 502:	90                   	nop
+ 503:	90                   	nop
+ 504:	90                   	nop
+ 505:	90                   	nop
+ 506:	90                   	nop
+ 507:	90                   	nop
+ 508:	90                   	nop
+ 509:	90                   	nop
+ 50a:	90                   	nop
+ 50b:	90                   	nop
+ 50c:	90                   	nop
+ 50d:	90                   	nop
+ 50e:	90                   	nop
+ 50f:	90                   	nop
+
+0000000000000510 <get_process_md5>:
+ 510:	e8 00 00 00 00       	call   515 <get_process_md5+0x5>
+ 515:	55                   	push   %rbp
+ 516:	48 89 e5             	mov    %rsp,%rbp
+ 519:	41 54                	push   %r12
+ 51b:	49 89 f4             	mov    %rsi,%r12
+ 51e:	53                   	push   %rbx
+ 51f:	0f b6 07             	movzbl (%rdi),%eax
+ 522:	84 c0                	test   %al,%al
+ 524:	74 78                	je     59e <get_process_md5+0x8e>
+ 526:	48 8d 57 01          	lea    0x1(%rdi),%rdx
+ 52a:	bb 05 15 00 00       	mov    $0x1505,%ebx
+ 52f:	48 89 d9             	mov    %rbx,%rcx
+ 532:	48 83 c2 01          	add    $0x1,%rdx
+ 536:	48 c1 e1 05          	shl    $0x5,%rcx
+ 53a:	48 01 cb             	add    %rcx,%rbx
+ 53d:	48 01 c3             	add    %rax,%rbx
+ 540:	0f b6 42 ff          	movzbl -0x1(%rdx),%eax
+ 544:	84 c0                	test   %al,%al
+ 546:	75 e7                	jne    52f <get_process_md5+0x1f>
+ 548:	48 c7 c7 00 00 00 00 	mov    $0x0,%rdi
+ 54f:	e8 00 00 00 00       	call   554 <get_process_md5+0x44>
+ 554:	48 89 de             	mov    %rbx,%rsi
+ 557:	48 c7 c7 00 00 00 00 	mov    $0x0,%rdi
+ 55e:	e8 00 00 00 00       	call   563 <get_process_md5+0x53>
+ 563:	48 85 c0             	test   %rax,%rax
+ 566:	74 3d                	je     5a5 <get_process_md5+0x95>
+ 568:	48 8b 90 00 01 00 00 	mov    0x100(%rax),%rdx
+ 56f:	48 c7 c7 00 00 00 00 	mov    $0x0,%rdi
+ 576:	49 89 14 24          	mov    %rdx,(%r12)
+ 57a:	48 8b 80 08 01 00 00 	mov    0x108(%rax),%rax
+ 581:	49 89 44 24 08       	mov    %rax,0x8(%r12)
+ 586:	e8 00 00 00 00       	call   58b <get_process_md5+0x7b>
+ 58b:	31 c0                	xor    %eax,%eax
+ 58d:	5b                   	pop    %rbx
+ 58e:	41 5c                	pop    %r12
+ 590:	5d                   	pop    %rbp
+ 591:	31 d2                	xor    %edx,%edx
+ 593:	31 c9                	xor    %ecx,%ecx
+ 595:	31 f6                	xor    %esi,%esi
+ 597:	31 ff                	xor    %edi,%edi
+ 599:	e9 00 00 00 00       	jmp    59e <get_process_md5+0x8e>
+ 59e:	bb 05 15 00 00       	mov    $0x1505,%ebx
+ 5a3:	eb a3                	jmp    548 <get_process_md5+0x38>
+ 5a5:	48 c7 c7 00 00 00 00 	mov    $0x0,%rdi
+ 5ac:	e8 00 00 00 00       	call   5b1 <get_process_md5+0xa1>
+ 5b1:	b8 fe ff ff ff       	mov    $0xfffffffe,%eax
+ 5b6:	eb d5                	jmp    58d <get_process_md5+0x7d>
+ 5b8:	0f 1f 84 00 00 00 00 	nopl   0x0(%rax,%rax,1)
+ 5bf:	00 
+
+00000000000005c0 <__pfx_get_process_rule_mode_and_interval>:
+ 5c0:	90                   	nop
+ 5c1:	90                   	nop
+ 5c2:	90                   	nop
+ 5c3:	90                   	nop
+ 5c4:	90                   	nop
+ 5c5:	90                   	nop
+ 5c6:	90                   	nop
+ 5c7:	90                   	nop
+ 5c8:	90                   	nop
+ 5c9:	90                   	nop
+ 5ca:	90                   	nop
+ 5cb:	90                   	nop
+ 5cc:	90                   	nop
+ 5cd:	90                   	nop
+ 5ce:	90                   	nop
+ 5cf:	90                   	nop
+
+00000000000005d0 <get_process_rule_mode_and_interval>:
+ 5d0:	e8 00 00 00 00       	call   5d5 <get_process_rule_mode_and_interval+0x5>
+ 5d5:	55                   	push   %rbp
+ 5d6:	48 89 e5             	mov    %rsp,%rbp
+ 5d9:	41 57                	push   %r15
+ 5db:	41 56                	push   %r14
+ 5dd:	49 89 fe             	mov    %rdi,%r14
+ 5e0:	41 55                	push   %r13
+ 5e2:	49 89 d5             	mov    %rdx,%r13
+ 5e5:	41 54                	push   %r12
+ 5e7:	49 89 f4             	mov    %rsi,%r12
+ 5ea:	53                   	push   %rbx
+ 5eb:	0f b6 07             	movzbl (%rdi),%eax
+ 5ee:	84 c0                	test   %al,%al
+ 5f0:	0f 84 c6 00 00 00    	je     6bc <get_process_rule_mode_and_interval+0xec>
+ 5f6:	48 8d 57 01          	lea    0x1(%rdi),%rdx
+ 5fa:	bb 05 15 00 00       	mov    $0x1505,%ebx
+ 5ff:	48 89 d9             	mov    %rbx,%rcx
+ 602:	48 83 c2 01          	add    $0x1,%rdx
+ 606:	48 c1 e1 05          	shl    $0x5,%rcx
+ 60a:	48 01 cb             	add    %rcx,%rbx
+ 60d:	48 01 c3             	add    %rax,%rbx
+ 610:	0f b6 42 ff          	movzbl -0x1(%rdx),%eax
+ 614:	84 c0                	test   %al,%al
+ 616:	75 e7                	jne    5ff <get_process_rule_mode_and_interval+0x2f>
+ 618:	48 c7 c7 00 00 00 00 	mov    $0x0,%rdi
+ 61f:	45 31 ff             	xor    %r15d,%r15d
+ 622:	e8 00 00 00 00       	call   627 <get_process_rule_mode_and_interval+0x57>
+ 627:	48 89 de             	mov    %rbx,%rsi
+ 62a:	48 c7 c7 00 00 00 00 	mov    $0x0,%rdi
+ 631:	e8 00 00 00 00       	call   636 <get_process_rule_mode_and_interval+0x66>
+ 636:	48 89 c3             	mov    %rax,%rbx
+ 639:	48 85 c0             	test   %rax,%rax
+ 63c:	74 2f                	je     66d <get_process_rule_mode_and_interval+0x9d>
+ 63e:	48 8b 05 00 00 00 00 	mov    0x0(%rip),%rax        # 645 <get_process_rule_mode_and_interval+0x75>
+ 645:	48 2b 83 18 01 00 00 	sub    0x118(%rbx),%rax
+ 64c:	41 bf 01 00 00 00    	mov    $0x1,%r15d
+ 652:	48 3d 88 13 00 00    	cmp    $0x1388,%rax
+ 658:	41 0f 97 45 00       	seta   0x0(%r13)
+ 65d:	77 34                	ja     693 <get_process_rule_mode_and_interval+0xc3>
+ 65f:	0f b6 83 10 01 00 00 	movzbl 0x110(%rbx),%eax
+ 666:	83 e0 07             	and    $0x7,%eax
+ 669:	41 88 04 24          	mov    %al,(%r12)
+ 66d:	48 c7 c7 00 00 00 00 	mov    $0x0,%rdi
+ 674:	e8 00 00 00 00       	call   679 <get_process_rule_mode_and_interval+0xa9>
+ 679:	44 89 f8             	mov    %r15d,%eax
+ 67c:	5b                   	pop    %rbx
+ 67d:	41 5c                	pop    %r12
+ 67f:	41 5d                	pop    %r13
+ 681:	41 5e                	pop    %r14
+ 683:	41 5f                	pop    %r15
+ 685:	5d                   	pop    %rbp
+ 686:	31 d2                	xor    %edx,%edx
+ 688:	31 c9                	xor    %ecx,%ecx
+ 68a:	31 f6                	xor    %esi,%esi
+ 68c:	31 ff                	xor    %edi,%edi
+ 68e:	e9 00 00 00 00       	jmp    693 <get_process_rule_mode_and_interval+0xc3>
+ 693:	48 8b 05 00 00 00 00 	mov    0x0(%rip),%rax        # 69a <get_process_rule_mode_and_interval+0xca>
+ 69a:	4c 8b ab 20 01 00 00 	mov    0x120(%rbx),%r13
+ 6a1:	4c 89 f7             	mov    %r14,%rdi
+ 6a4:	45 31 ff             	xor    %r15d,%r15d
+ 6a7:	48 89 83 18 01 00 00 	mov    %rax,0x118(%rbx)
+ 6ae:	e8 5d f9 ff ff       	call   10 <get_file_mtime>
+ 6b3:	49 39 c5             	cmp    %rax,%r13
+ 6b6:	41 0f 94 c7          	sete   %r15b
+ 6ba:	eb a3                	jmp    65f <get_process_rule_mode_and_interval+0x8f>
+ 6bc:	bb 05 15 00 00       	mov    $0x1505,%ebx
+ 6c1:	e9 52 ff ff ff       	jmp    618 <get_process_rule_mode_and_interval+0x48>
+ 6c6:	66 2e 0f 1f 84 00 00 	cs nopw 0x0(%rax,%rax,1)
+ 6cd:	00 00 00 
+
+00000000000006d0 <__pfx_find_all_process_info>:
+ 6d0:	90                   	nop
+ 6d1:	90                   	nop
+ 6d2:	90                   	nop
+ 6d3:	90                   	nop
+ 6d4:	90                   	nop
+ 6d5:	90                   	nop
+ 6d6:	90                   	nop
+ 6d7:	90                   	nop
+ 6d8:	90                   	nop
+ 6d9:	90                   	nop
+ 6da:	90                   	nop
+ 6db:	90                   	nop
+ 6dc:	90                   	nop
+ 6dd:	90                   	nop
+ 6de:	90                   	nop
+ 6df:	90                   	nop
+
+00000000000006e0 <find_all_process_info>:
+ 6e0:	e8 00 00 00 00       	call   6e5 <find_all_process_info+0x5>
+ 6e5:	55                   	push   %rbp
+ 6e6:	48 c7 c7 00 00 00 00 	mov    $0x0,%rdi
+ 6ed:	48 89 e5             	mov    %rsp,%rbp
+ 6f0:	53                   	push   %rbx
+ 6f1:	e8 00 00 00 00       	call   6f6 <find_all_process_info+0x16>
+ 6f6:	48 8b 05 00 00 00 00 	mov    0x0(%rip),%rax        # 6fd <find_all_process_info+0x1d>
+ 6fd:	48 3d 00 00 00 00    	cmp    $0x0,%rax
+ 703:	74 4f                	je     754 <find_all_process_info+0x74>
+ 705:	48 8d 58 f8          	lea    -0x8(%rax),%rbx
+ 709:	48 8b 33             	mov    (%rbx),%rsi
+ 70c:	48 c7 c7 00 00 00 00 	mov    $0x0,%rdi
+ 713:	e8 00 00 00 00       	call   718 <find_all_process_info+0x38>
+ 718:	48 85 c0             	test   %rax,%rax
+ 71b:	74 27                	je     744 <find_all_process_info+0x64>
+ 71d:	44 0f b6 80 10 01 00 	movzbl 0x110(%rax),%r8d
+ 724:	00 
+ 725:	48 8d 88 00 01 00 00 	lea    0x100(%rax),%rcx
+ 72c:	ba 10 00 00 00       	mov    $0x10,%edx
+ 731:	48 89 c6             	mov    %rax,%rsi
+ 734:	48 c7 c7 00 00 00 00 	mov    $0x0,%rdi
+ 73b:	41 83 e0 07          	and    $0x7,%r8d
+ 73f:	e8 00 00 00 00       	call   744 <find_all_process_info+0x64>
+ 744:	48 8b 43 08          	mov    0x8(%rbx),%rax
+ 748:	48 8d 58 f8          	lea    -0x8(%rax),%rbx
+ 74c:	48 3d 00 00 00 00    	cmp    $0x0,%rax
+ 752:	75 b5                	jne    709 <find_all_process_info+0x29>
+ 754:	48 c7 c7 00 00 00 00 	mov    $0x0,%rdi
+ 75b:	e8 00 00 00 00       	call   760 <find_all_process_info+0x80>
+ 760:	48 8b 5d f8          	mov    -0x8(%rbp),%rbx
+ 764:	c9                   	leave
+ 765:	31 c0                	xor    %eax,%eax
+ 767:	31 d2                	xor    %edx,%edx
+ 769:	31 c9                	xor    %ecx,%ecx
+ 76b:	31 f6                	xor    %esi,%esi
+ 76d:	31 ff                	xor    %edi,%edi
+ 76f:	45 31 c0             	xor    %r8d,%r8d
+ 772:	e9 00 00 00 00       	jmp    777 <find_all_process_info+0x97>
+ 777:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)
+ 77e:	00 00 
+
+0000000000000780 <__pfx_delete_all_process_audit_info>:
+ 780:	90                   	nop
+ 781:	90                   	nop
+ 782:	90                   	nop
+ 783:	90                   	nop
+ 784:	90                   	nop
+ 785:	90                   	nop
+ 786:	90                   	nop
+ 787:	90                   	nop
+ 788:	90                   	nop
+ 789:	90                   	nop
+ 78a:	90                   	nop
+ 78b:	90                   	nop
+ 78c:	90                   	nop
+ 78d:	90                   	nop
+ 78e:	90                   	nop
+ 78f:	90                   	nop
+
+0000000000000790 <delete_all_process_audit_info>:
+ 790:	e8 00 00 00 00       	call   795 <delete_all_process_audit_info+0x5>
+ 795:	55                   	push   %rbp
+ 796:	48 c7 c7 00 00 00 00 	mov    $0x0,%rdi
+ 79d:	48 89 e5             	mov    %rsp,%rbp
+ 7a0:	41 57                	push   %r15
+ 7a2:	41 56                	push   %r14
+ 7a4:	41 55                	push   %r13
+ 7a6:	41 54                	push   %r12
+ 7a8:	53                   	push   %rbx
+ 7a9:	e8 00 00 00 00       	call   7ae <delete_all_process_audit_info+0x1e>
+ 7ae:	48 8b 05 00 00 00 00 	mov    0x0(%rip),%rax        # 7b5 <delete_all_process_audit_info+0x25>
+ 7b5:	48 8b 08             	mov    (%rax),%rcx
+ 7b8:	48 3d 00 00 00 00    	cmp    $0x0,%rax
+ 7be:	0f 84 94 00 00 00    	je     858 <delete_all_process_audit_info+0xc8>
+ 7c4:	48 8d 58 f8          	lea    -0x8(%rax),%rbx
+ 7c8:	4c 8d 69 f8          	lea    -0x8(%rcx),%r13
+ 7cc:	49 bf 00 01 00 00 00 	movabs $0xdead000000000100,%r15
+ 7d3:	00 ad de 
+ 7d6:	49 be 22 01 00 00 00 	movabs $0xdead000000000122,%r14
+ 7dd:	00 ad de 
+ 7e0:	eb 03                	jmp    7e5 <delete_all_process_audit_info+0x55>
+ 7e2:	49 89 c5             	mov    %rax,%r13
+ 7e5:	48 8b 33             	mov    (%rbx),%rsi
+ 7e8:	48 c7 c7 00 00 00 00 	mov    $0x0,%rdi
+ 7ef:	e8 00 00 00 00       	call   7f4 <delete_all_process_audit_info+0x64>
+ 7f4:	49 89 c4             	mov    %rax,%r12
+ 7f7:	48 85 c0             	test   %rax,%rax
+ 7fa:	74 1e                	je     81a <delete_all_process_audit_info+0x8a>
+ 7fc:	48 8b 33             	mov    (%rbx),%rsi
+ 7ff:	48 c7 c7 00 00 00 00 	mov    $0x0,%rdi
+ 806:	e8 00 00 00 00       	call   80b <delete_all_process_audit_info+0x7b>
+ 80b:	48 8b 3d 00 00 00 00 	mov    0x0(%rip),%rdi        # 812 <delete_all_process_audit_info+0x82>
+ 812:	4c 89 e6             	mov    %r12,%rsi
+ 815:	e8 00 00 00 00       	call   81a <delete_all_process_audit_info+0x8a>
+ 81a:	48 8b 53 08          	mov    0x8(%rbx),%rdx
+ 81e:	48 8b 43 10          	mov    0x10(%rbx),%rax
+ 822:	48 89 de             	mov    %rbx,%rsi
+ 825:	48 8b 3d 00 00 00 00 	mov    0x0(%rip),%rdi        # 82c <delete_all_process_audit_info+0x9c>
+ 82c:	48 89 42 08          	mov    %rax,0x8(%rdx)
+ 830:	48 89 10             	mov    %rdx,(%rax)
+ 833:	4c 89 7b 08          	mov    %r15,0x8(%rbx)
+ 837:	4c 89 73 10          	mov    %r14,0x10(%rbx)
+ 83b:	4c 89 eb             	mov    %r13,%rbx
+ 83e:	e8 00 00 00 00       	call   843 <delete_all_process_audit_info+0xb3>
+ 843:	49 8b 45 08          	mov    0x8(%r13),%rax
+ 847:	49 8d 55 08          	lea    0x8(%r13),%rdx
+ 84b:	48 83 e8 08          	sub    $0x8,%rax
+ 84f:	48 81 fa 00 00 00 00 	cmp    $0x0,%rdx
+ 856:	75 8a                	jne    7e2 <delete_all_process_audit_info+0x52>
+ 858:	48 c7 c7 00 00 00 00 	mov    $0x0,%rdi
+ 85f:	e8 00 00 00 00       	call   864 <delete_all_process_audit_info+0xd4>
+ 864:	5b                   	pop    %rbx
+ 865:	41 5c                	pop    %r12
+ 867:	41 5d                	pop    %r13
+ 869:	41 5e                	pop    %r14
+ 86b:	41 5f                	pop    %r15
+ 86d:	5d                   	pop    %rbp
+ 86e:	31 c0                	xor    %eax,%eax
+ 870:	31 d2                	xor    %edx,%edx
+ 872:	31 c9                	xor    %ecx,%ecx
+ 874:	31 f6                	xor    %esi,%esi
+ 876:	31 ff                	xor    %edi,%edi
+ 878:	e9 00 00 00 00       	jmp    87d <delete_all_process_audit_info+0xed>
+ 87d:	0f 1f 00             	nopl   (%rax)
+
+0000000000000880 <__pfx___process_rules_parse>:
+ 880:	90                   	nop
+ 881:	90                   	nop
+ 882:	90                   	nop
+ 883:	90                   	nop
+ 884:	90                   	nop
+ 885:	90                   	nop
+ 886:	90                   	nop
+ 887:	90                   	nop
+ 888:	90                   	nop
+ 889:	90                   	nop
+ 88a:	90                   	nop
+ 88b:	90                   	nop
+ 88c:	90                   	nop
+ 88d:	90                   	nop
+ 88e:	90                   	nop
+ 88f:	90                   	nop
+
+0000000000000890 <__process_rules_parse>:
+ 890:	e8 00 00 00 00       	call   895 <__process_rules_parse+0x5>
+ 895:	55                   	push   %rbp
+ 896:	48 89 e5             	mov    %rsp,%rbp
+ 899:	41 54                	push   %r12
+ 89b:	49 89 fc             	mov    %rdi,%r12
+ 89e:	53                   	push   %rbx
+ 89f:	e8 00 00 00 00       	call   8a4 <__process_rules_parse+0x14>
+ 8a4:	48 85 c0             	test   %rax,%rax
+ 8a7:	74 5f                	je     908 <__process_rules_parse+0x78>
+ 8a9:	41 0f b6 14 24       	movzbl (%r12),%edx
+ 8ae:	4c 89 e6             	mov    %r12,%rsi
+ 8b1:	84 d2                	test   %dl,%dl
+ 8b3:	74 19                	je     8ce <__process_rules_parse+0x3e>
+ 8b5:	48 b9 00 26 00 00 01 	movabs $0x100002600,%rcx
+ 8bc:	00 00 00 
+ 8bf:	80 fa 20             	cmp    $0x20,%dl
+ 8c2:	77 0a                	ja     8ce <__process_rules_parse+0x3e>
+ 8c4:	48 0f a3 d1          	bt     %rdx,%rcx
+ 8c8:	0f 82 9c 00 00 00    	jb     96a <__process_rules_parse+0xda>
+ 8ce:	48 bf 00 26 00 00 01 	movabs $0x100002600,%rdi
+ 8d5:	00 00 00 
+ 8d8:	4c 01 e0             	add    %r12,%rax
+ 8db:	48 39 c6             	cmp    %rax,%rsi
+ 8de:	73 12                	jae    8f2 <__process_rules_parse+0x62>
+ 8e0:	0f b6 50 ff          	movzbl -0x1(%rax),%edx
+ 8e4:	8d 4a ff             	lea    -0x1(%rdx),%ecx
+ 8e7:	80 f9 1f             	cmp    $0x1f,%cl
+ 8ea:	77 06                	ja     8f2 <__process_rules_parse+0x62>
+ 8ec:	48 0f a3 d7          	bt     %rdx,%rdi
+ 8f0:	72 69                	jb     95b <__process_rules_parse+0xcb>
+ 8f2:	48 29 f0             	sub    %rsi,%rax
+ 8f5:	4c 89 e7             	mov    %r12,%rdi
+ 8f8:	48 89 c3             	mov    %rax,%rbx
+ 8fb:	48 89 c2             	mov    %rax,%rdx
+ 8fe:	e8 00 00 00 00       	call   903 <__process_rules_parse+0x73>
+ 903:	41 c6 04 1c 00       	movb   $0x0,(%r12,%rbx,1)
+ 908:	41 80 3c 24 63       	cmpb   $0x63,(%r12)
+ 90d:	75 70                	jne    97f <__process_rules_parse+0xef>
+ 90f:	41 80 7c 24 01 00    	cmpb   $0x0,0x1(%r12)
+ 915:	75 68                	jne    97f <__process_rules_parse+0xef>
+ 917:	65 48 8b 04 25 00 00 	mov    %gs:0x0,%rax
+ 91e:	00 00 
+ 920:	48 8b b8 e0 09 00 00 	mov    0x9e0(%rax),%rdi
+ 927:	ba 0c 00 00 00       	mov    $0xc,%edx
+ 92c:	48 c7 c6 00 00 00 00 	mov    $0x0,%rsi
+ 933:	48 81 c7 c0 0b 00 00 	add    $0xbc0,%rdi
+ 93a:	e8 00 00 00 00       	call   93f <__process_rules_parse+0xaf>
+ 93f:	85 c0                	test   %eax,%eax
+ 941:	75 05                	jne    948 <__process_rules_parse+0xb8>
+ 943:	e8 00 00 00 00       	call   948 <__process_rules_parse+0xb8>
+ 948:	5b                   	pop    %rbx
+ 949:	31 c0                	xor    %eax,%eax
+ 94b:	41 5c                	pop    %r12
+ 94d:	5d                   	pop    %rbp
+ 94e:	31 d2                	xor    %edx,%edx
+ 950:	31 c9                	xor    %ecx,%ecx
+ 952:	31 f6                	xor    %esi,%esi
+ 954:	31 ff                	xor    %edi,%edi
+ 956:	e9 00 00 00 00       	jmp    95b <__process_rules_parse+0xcb>
+ 95b:	48 83 e8 01          	sub    $0x1,%rax
+ 95f:	48 39 c6             	cmp    %rax,%rsi
+ 962:	0f 85 78 ff ff ff    	jne    8e0 <__process_rules_parse+0x50>
+ 968:	eb 88                	jmp    8f2 <__process_rules_parse+0x62>
+ 96a:	0f b6 56 01          	movzbl 0x1(%rsi),%edx
+ 96e:	48 83 c6 01          	add    $0x1,%rsi
+ 972:	84 d2                	test   %dl,%dl
+ 974:	0f 85 45 ff ff ff    	jne    8bf <__process_rules_parse+0x2f>
+ 97a:	e9 4f ff ff ff       	jmp    8ce <__process_rules_parse+0x3e>
+ 97f:	ba 05 00 00 00       	mov    $0x5,%edx
+ 984:	48 c7 c6 00 00 00 00 	mov    $0x0,%rsi
+ 98b:	4c 89 e7             	mov    %r12,%rdi
+ 98e:	e8 00 00 00 00       	call   993 <__process_rules_parse+0x103>
+ 993:	85 c0                	test   %eax,%eax
+ 995:	74 80                	je     917 <__process_rules_parse+0x87>
+ 997:	ba 04 00 00 00       	mov    $0x4,%edx
+ 99c:	48 c7 c6 00 00 00 00 	mov    $0x0,%rsi
+ 9a3:	4c 89 e7             	mov    %r12,%rdi
+ 9a6:	e8 00 00 00 00       	call   9ab <__process_rules_parse+0x11b>
+ 9ab:	85 c0                	test   %eax,%eax
+ 9ad:	75 99                	jne    948 <__process_rules_parse+0xb8>
+ 9af:	4c 89 e1             	mov    %r12,%rcx
+ 9b2:	ba 05 01 00 00       	mov    $0x105,%edx
+ 9b7:	48 c7 c6 00 00 00 00 	mov    $0x0,%rsi
+ 9be:	48 c7 c7 00 00 00 00 	mov    $0x0,%rdi
+ 9c5:	e8 00 00 00 00       	call   9ca <__process_rules_parse+0x13a>
+ 9ca:	e8 00 00 00 00       	call   9cf <__process_rules_parse+0x13f>
+ 9cf:	e9 74 ff ff ff       	jmp    948 <__process_rules_parse+0xb8>
+ 9d4:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+ 9db:	00 00 00 00 
+ 9df:	90                   	nop
+
+00000000000009e0 <__pfx_process_audit_init>:
+ 9e0:	90                   	nop
+ 9e1:	90                   	nop
+ 9e2:	90                   	nop
+ 9e3:	90                   	nop
+ 9e4:	90                   	nop
+ 9e5:	90                   	nop
+ 9e6:	90                   	nop
+ 9e7:	90                   	nop
+ 9e8:	90                   	nop
+ 9e9:	90                   	nop
+ 9ea:	90                   	nop
+ 9eb:	90                   	nop
+ 9ec:	90                   	nop
+ 9ed:	90                   	nop
+ 9ee:	90                   	nop
+ 9ef:	90                   	nop
+
+00000000000009f0 <process_audit_init>:
+ 9f0:	e8 00 00 00 00       	call   9f5 <process_audit_init+0x5>
+ 9f5:	55                   	push   %rbp
+ 9f6:	ba 22 01 00 00       	mov    $0x122,%edx
+ 9fb:	48 c7 c6 00 00 00 00 	mov    $0x0,%rsi
+ a02:	48 c7 05 00 00 00 00 	movq   $0x0,0x0(%rip)        # a0d <process_audit_init+0x1d>
+ a09:	00 00 00 00 
+ a0d:	48 89 e5             	mov    %rsp,%rbp
+ a10:	53                   	push   %rbx
+ a11:	48 89 fb             	mov    %rdi,%rbx
+ a14:	48 c7 c7 00 00 00 00 	mov    $0x0,%rdi
+ a1b:	e8 00 00 00 00       	call   a20 <process_audit_init+0x30>
+ a20:	48 c7 c1 00 00 00 00 	mov    $0x0,%rcx
+ a27:	48 89 de             	mov    %rbx,%rsi
+ a2a:	48 c7 c2 00 00 00 00 	mov    $0x0,%rdx
+ a31:	48 c7 c7 00 00 00 00 	mov    $0x0,%rdi
+ a38:	e8 00 00 00 00       	call   a3d <process_audit_init+0x4d>
+ a3d:	31 d2                	xor    %edx,%edx
+ a3f:	be 28 01 00 00       	mov    $0x128,%esi
+ a44:	48 c7 c7 00 00 00 00 	mov    $0x0,%rdi
+ a4b:	e8 00 00 00 00       	call   a50 <process_audit_init+0x60>
+ a50:	31 d2                	xor    %edx,%edx
+ a52:	be 18 00 00 00       	mov    $0x18,%esi
+ a57:	48 c7 c7 00 00 00 00 	mov    $0x0,%rdi
+ a5e:	48 89 05 00 00 00 00 	mov    %rax,0x0(%rip)        # a65 <process_audit_init+0x75>
+ a65:	e8 00 00 00 00       	call   a6a <process_audit_init+0x7a>
+ a6a:	48 8b 5d f8          	mov    -0x8(%rbp),%rbx
+ a6e:	48 89 05 00 00 00 00 	mov    %rax,0x0(%rip)        # a75 <process_audit_init+0x85>
+ a75:	31 c0                	xor    %eax,%eax
+ a77:	c9                   	leave
+ a78:	31 d2                	xor    %edx,%edx
+ a7a:	31 c9                	xor    %ecx,%ecx
+ a7c:	31 f6                	xor    %esi,%esi
+ a7e:	31 ff                	xor    %edi,%edi
+ a80:	e9 00 00 00 00       	jmp    a85 <process_audit_init+0x95>
+ a85:	66 66 2e 0f 1f 84 00 	data16 cs nopw 0x0(%rax,%rax,1)
+ a8c:	00 00 00 00 
+
+0000000000000a90 <__pfx_process_audit_exit>:
+ a90:	90                   	nop
+ a91:	90                   	nop
+ a92:	90                   	nop
+ a93:	90                   	nop
+ a94:	90                   	nop
+ a95:	90                   	nop
+ a96:	90                   	nop
+ a97:	90                   	nop
+ a98:	90                   	nop
+ a99:	90                   	nop
+ a9a:	90                   	nop
+ a9b:	90                   	nop
+ a9c:	90                   	nop
+ a9d:	90                   	nop
+ a9e:	90                   	nop
+ a9f:	90                   	nop
+
+0000000000000aa0 <process_audit_exit>:
+ aa0:	e8 00 00 00 00       	call   aa5 <process_audit_exit+0x5>
+ aa5:	55                   	push   %rbp
+ aa6:	48 89 e5             	mov    %rsp,%rbp
+ aa9:	53                   	push   %rbx
+ aaa:	48 89 fb             	mov    %rdi,%rbx
+ aad:	e8 00 00 00 00       	call   ab2 <process_audit_exit+0x12>
+ ab2:	48 8b 3d 00 00 00 00 	mov    0x0(%rip),%rdi        # ab9 <process_audit_exit+0x19>
+ ab9:	48 85 ff             	test   %rdi,%rdi
+ abc:	74 05                	je     ac3 <process_audit_exit+0x23>
+ abe:	e8 00 00 00 00       	call   ac3 <process_audit_exit+0x23>
+ ac3:	48 8b 3d 00 00 00 00 	mov    0x0(%rip),%rdi        # aca <process_audit_exit+0x2a>
+ aca:	48 85 ff             	test   %rdi,%rdi
+ acd:	74 05                	je     ad4 <process_audit_exit+0x34>
+ acf:	e8 00 00 00 00       	call   ad4 <process_audit_exit+0x34>
+ ad4:	48 89 de             	mov    %rbx,%rsi
+ ad7:	48 c7 c7 00 00 00 00 	mov    $0x0,%rdi
+ ade:	e8 00 00 00 00       	call   ae3 <process_audit_exit+0x43>
+ ae3:	ba 34 01 00 00       	mov    $0x134,%edx
+ ae8:	48 c7 c6 00 00 00 00 	mov    $0x0,%rsi
+ aef:	48 c7 c7 00 00 00 00 	mov    $0x0,%rdi
+ af6:	e8 00 00 00 00       	call   afb <process_audit_exit+0x5b>
+ afb:	48 8b 5d f8          	mov    -0x8(%rbp),%rbx
+ aff:	c9                   	leave
+ b00:	31 c0                	xor    %eax,%eax
+ b02:	31 d2                	xor    %edx,%edx
+ b04:	31 f6                	xor    %esi,%esi
+ b06:	31 ff                	xor    %edi,%edi
+ b08:	e9 00 00 00 00       	jmp    b0d <process_audit_exit+0x6d>

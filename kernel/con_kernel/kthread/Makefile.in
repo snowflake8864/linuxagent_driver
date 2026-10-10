@@ -1,0 +1,3 @@
+kthread-objs += kthread/kthread.o
+
+vd_kernel-objs += $(kthread-objs)

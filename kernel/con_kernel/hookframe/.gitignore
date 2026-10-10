@@ -1,0 +1,5 @@
+*.o
+*.cmd
+.cache.mk
+.tmp_versions
+*.mod.c

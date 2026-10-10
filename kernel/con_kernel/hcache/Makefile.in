@@ -1,0 +1,2 @@
+hcache-objs += hcache/h_cache.o 
+vd_kernel-objs += $(hcache-objs)

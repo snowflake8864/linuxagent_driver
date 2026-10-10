@@ -1,0 +1,2 @@
+module_ref-objs += ref_manager/module_ref.o 
+vd_kernel-objs += $(module_ref-objs)

@@ -1,0 +1,3 @@
+iptree-objs += iptree/ipv4_rules.o 
+iptree-objs += iptree/ipv6_rules.o 
+vd_kernel-objs += $(iptree-objs)

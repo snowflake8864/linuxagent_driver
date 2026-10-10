@@ -1,0 +1,5 @@
+sysfs-objs += sysfs/kvd_sysfs.o
+sysfs-objs += sysfs/kvd_debugfs.o
+sysfs-objs += sysfs/sysfs_core.o
+
+vd_kernel-objs += $(sysfs-objs)

@@ -1,0 +1,3 @@
+notify-objs += notify/client_notify.o
+
+vd_kernel-objs += $(notify-objs)

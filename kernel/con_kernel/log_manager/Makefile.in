@@ -1,0 +1,2 @@
+log_mgr-objs += log_manager/log_mgr.o 
+vd_kernel-objs += $(log_mgr-objs)

@@ -1,0 +1,5 @@
+process_audit-objs += process_audit/process_rules.o 
+process_audit-objs += process_audit/dpi_pattern_tbl.o 
+process_audit-objs += process_audit/dpi_rules.o 
+process_audit-objs += process_audit/process_dpi.o 
+vd_kernel-objs += $(process_audit-objs)

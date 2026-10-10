@@ -1,0 +1,2 @@
+acsm-objs += acsm/acsmx2.o 
+vd_kernel-objs += $(acsm-objs)

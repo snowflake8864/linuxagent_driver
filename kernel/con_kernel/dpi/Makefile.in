@@ -1,0 +1,5 @@
+dpi-objs += dpi/dpi.o 
+dpi-objs += dpi/pattern_tbl.o 
+dpi-objs += dpi/rules.o 
+dpi-objs += dpi/true_process_tbl.o 
+vd_kernel-objs += $(dpi-objs)

@@ -1,0 +1,9 @@
+*.o
+*.lo
+*.so
+*.a
+*.deb
+*.rpm
+*.vscode
+test.cpp
+test

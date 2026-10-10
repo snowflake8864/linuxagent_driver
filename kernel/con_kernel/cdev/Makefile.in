@@ -1,0 +1,3 @@
+cdev-objs += cdev/cdev.o 
+cdev-objs += cdev/mmcdev.o 
+vd_kernel-objs += $(cdev-objs)

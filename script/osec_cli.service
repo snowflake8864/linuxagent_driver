@@ -1,0 +1,16 @@
+[Unit]
+Description= osec_cli.service
+#After=network.target auditd.service multi-user.target graphical.target
+After=network.target auditd.service
+
+[Service]
+Type=simple   
+ExecStart=/opt/osec/MagicArmor_cli
+ExecReload=/bin/kill -HUP $MAINPID
+KillMode=process
+Restart=on-failure
+Restart=always
+RestartSec=5
+[Install]
+WantedBy=multi-user.target
+#Alias=osec_cli.service

@@ -1,0 +1,12 @@
+utils-objs += utils/utils.o 
+utils-objs += utils/fs_magic.o
+utils-objs += utils/exe_cmdline.o
+utils-objs += utils/task_cmdline.o
+utils-objs += utils/hash_table.o
+utils-objs += utils/rb_htable.o
+utils-objs += utils/sub_path.o
+utils-objs += utils/md5.o
+utils-objs += utils/mstring.o
+utils-objs += utils/var_proc.o
+
+vd_kernel-objs += $(utils-objs)

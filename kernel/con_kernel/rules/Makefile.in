@@ -1,0 +1,3 @@
+rules-objs += rules/rules.o 
+rules-objs += rules/conn_block_rules.o 
+vd_kernel-objs += $(rules-objs)
