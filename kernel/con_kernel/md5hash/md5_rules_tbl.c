@@ -156,6 +156,9 @@ static void delete_all_md5_actions(void)
     }
 
     synchronize_rcu(); // Wait for all readers to finish
+#if LINUX_VERSION_CODE < KERNEL_VERSION(3,0,0)
+    rcu_barrier();
+#endif
     LOG_INFO("Deleted MD5 count:%d\n", count);
 }
 #if LINUX_VERSION_CODE < KERNEL_VERSION(3,0,0)
