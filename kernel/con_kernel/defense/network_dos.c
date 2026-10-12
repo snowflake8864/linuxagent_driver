@@ -63,6 +63,9 @@ struct NetTcpUdpInfo {
     struct NetworkKernelRulesInfo info;
 };
 
+#if TCP_ECN_FEATURE == 1
+static uint32_t tcp_force_ecn = 1;
+#endif
 
 unsigned long timer_status = 0;  // 初始值为 0，表示所有定时器都关闭
 struct timer_list netlog_audit_timer;
@@ -2154,103 +2157,66 @@ static int netdos_tcp_out(struct sk_buff* skb,struct iphdr* iph, uint32_t u_type
 }
 
 
-#if 0
-#if 0
-static int set_tcp_ecn_mark(struct sk_buff *skb)
+#if TCP_ECN_FEATURE == 1
+/* TCPHDR_ECE 在 2.6.32 中不存在，直接补上 */
+#ifndef TCPHDR_ECE
+#define TCPHDR_ECE 0x40
+#endif
+
+/* skb_try_make_writable 在约 3.0 内核引入，旧内核手动实现等价逻辑 */
+#if LINUX_VERSION_CODE < KERNEL_VERSION(2, 7, 0)
+static inline int skb_try_make_writable(struct sk_buff *skb,
+                                        unsigned int write_len)
 {
-	struct iphdr *ih;
-	struct tcphdr *th;
-    // 验证输入 SKB
-    if (!skb || skb_headlen(skb) < sizeof(struct iphdr)) {
-        return -1;
-    }
-
-    ih = ip_hdr(skb);
-    if (ih->ihl < 5 || ih->ihl > 15 || skb_headlen(skb) < (ih->ihl << 2) + sizeof(struct tcphdr)) {
-        return -1;
-    }
-
-    th = (struct tcphdr *)((__u32 *)ih + ih->ihl);
-    if (th->doff < 5) {
-        LOG_ERROR("Invalid TCP header\n");
-        return -1;
-    }
-    u8 *doff_res_byte = (u8 *)th + 12;
-    *doff_res_byte &= 0xF0;  
-
-    // 设置 Flags 字节（offset 13）---
-    u8 *flags_byte = (u8 *)th + 13;
-    // 清除 CWR (bit 7: 0x80)，设置 ECE (bit 6: 0x40)
-    *flags_byte = (*flags_byte & ~0x80) | 0x40;
-	ih->check = 0;
-    skb->ip_summed = CHECKSUM_NONE;
-    tcp_len = ntohs(iph->tot_len) - (iph->ihl << 2);
-    if (unlikely(skb->ip_summed == CHECKSUM_PARTIAL)) {
-        th->check = ~tcp_v4_check(tcp_len, ih->saddr, ih->daddr, 0);
-        skb->csum_start = skb_transport_header(skb) - skb->head;
-        skb->csum_offset = offsetof(struct tcphdr, check);
-
-    } else {
-        th->check = 0;
-        skb->csum = 0;
-        th->check = tcp_v4_check(tcp_len, ih->saddr, ih->daddr,\
-                csum_partial(th, tcp_len, skb->csum));
-	}
-	return 0;
+    return skb_cloned(skb) && !skb_clone_writable(skb, write_len) &&
+           pskb_expand_head(skb, 0, 0, GFP_ATOMIC);
 }
-#else
+#endif
 static int set_tcp_ecn_mark(struct sk_buff *skb, struct iphdr *iph)
 {
     struct tcphdr *th;
-    unsigned int tcp_len;
+    unsigned int tcphdr_len;
+    int tcp_len;
 
-    /* 验证 IP 头是否包含完整 TCP 头 */
+    // 确保 IP 头 + TCP 基本头在线性区
     if (unlikely(!pskb_may_pull(skb, (iph->ihl << 2) + sizeof(struct tcphdr))))
         return -EINVAL;
 
-    th = (struct tcphdr *)((u8 *)iph + (iph->ihl << 2));
+    // 重新获取 iph（pskb_may_pull 可能改变 skb->data）
+    iph = ip_hdr(skb);
+    th = tcp_hdr(skb);
 
-    /* 检查 TCP 头长度是否合法（至少 5 个 32-bit word = 20 字节） */
     if (unlikely(th->doff < 5))
         return -EINVAL;
 
-    /* 确保 skb 是线性的（便于修改） */
-    if (unlikely(skb_try_make_writable(skb, (iph->ihl << 2) + (th->doff << 2))))
+    // 确保整个 TCP 头（含选项）可写
+    tcphdr_len = th->doff << 2;
+    if (unlikely(skb_try_make_writable(skb, (iph->ihl << 2) + tcphdr_len)))
         return -ENOMEM;
 
-    /* 重新获取指针（因 skb_try_make_writable 可能改变内存布局） */
+    // 重新获取指针（skb_try_make_writable 可能再次改变 skb->data）
     iph = ip_hdr(skb);
-    th = (struct tcphdr *)((u8 *)iph + (iph->ihl << 2));
+    th = tcp_hdr(skb);
 
-    /*
-     * TCP 头偏移 12 字节结构：
-     *   高 4 位：Data Offset（必须保留）
-     *   低 4 位：Reserved (3 bits) + NS (1 bit) → 清零
-     */
-    u8 *doff_res_byte = (u8 *)th + 12;
-    *doff_res_byte &= 0xF0;  // 保留高4位（Data Offset），清零低4位（Res+NS）
-
-    /*
-     * TCP 头偏移 13 字节：Flags
-     * 使用内核标准宏操作 ECE/CWR
+    /* 
+     * TCP 头偏移 13 字节：Flags 字段
+     * 只将 ECE 标志置 1，其他所有标志位保持不变
      */
     u8 *flags_byte = (u8 *)th + 13;
-    *flags_byte = (*flags_byte & ~TCPHDR_CWR) | TCPHDR_ECE;
+    *flags_byte |= TCPHDR_ECE;  // 只设置 ECE 位，不影响其他位
 
-    /* 禁用硬件校验和 offload，强制软件计算 */
+    // 重新计算校验和
     skb->ip_summed = CHECKSUM_NONE;
     th->check = 0;
 
-    /* 计算 TCP 载荷长度 */
     tcp_len = ntohs(iph->tot_len) - (iph->ihl << 2);
 
-    /* 重新计算 TCP 校验和 */
+    // 使用 skb_checksum 正确处理非线性 skb（兼容 x86_64/loongarch64）
     th->check = tcp_v4_check(tcp_len, iph->saddr, iph->daddr,
-                             csum_partial(th, tcp_len, 0));
+                             skb_checksum(skb, (iph->ihl << 2), tcp_len, 0));
 
     return 0;
 }
-#endif
 #endif
 
 static unsigned int _nf_local_out_func(unsigned int holdnum, struct sk_buff *skb, const struct net_device *in, const struct net_device *out)
@@ -2299,11 +2265,10 @@ static unsigned int _nf_local_out_func(unsigned int holdnum, struct sk_buff *skb
             return NF_ACCEPT; 
         }   
     }   
-
-#if 0
-    if (ip_header_->protocol == IPPROTO_TCP) {
+#if TCP_ECN_FEATURE == 1
+    if (tcp_force_ecn == 1 && ip_header_->protocol == IPPROTO_TCP) {
         set_tcp_ecn_mark(skb, ip_header_);
-#if 1
+#if 0
     struct tcphdr *tcph = NULL;
     tcph = (struct tcphdr *)((__u32 *)ip_header_ + ip_header_->ihl);
         LOG_INFO("send:%u.%u.%u.%u:%u-->%u.%u.%u.%u:%u, syn:%d,ack:%d,rst:%d, sk:%p\n",\
@@ -2312,6 +2277,7 @@ static unsigned int _nf_local_out_func(unsigned int holdnum, struct sk_buff *skb
 #endif
     }
 #endif
+
     if (ip_header_->daddr == server_ip) {
          return NF_ACCEPT; 
     }   
@@ -3066,6 +3032,30 @@ static struct var_proc_info business_ports_rules_set =
 
 //
 
+#if TCP_ECN_FEATURE == 1
+static int __tcp_force_ecn_build(char *buf, size_t buf_sz, void *info)
+{
+
+    memset(buf, 0, buf_sz);
+    snprintf(buf, 1024,  "tcp_force_ecn: %u\n", tcp_force_ecn);
+        return 0;
+}
+static int __tcp_force_ecn_parse(const char *buf, void *info)
+{
+    if (sscanf(buf, "%u", &tcp_force_ecn) == 1) {
+        if (tcp_force_ecn > 1) {
+            tcp_force_ecn = 0;
+        }
+    }
+        return 0;
+}
+static struct var_proc_info tcp_force_ecn_set =
+{
+        .parse = __tcp_force_ecn_parse,
+        .build = __tcp_force_ecn_build,
+};
+#endif
+
 int network_dos_init(void)
 {
     int err = 0;
@@ -3074,7 +3064,10 @@ int network_dos_init(void)
         return err;
     }
    
-	var_proc_create("net_rules", proc_osec, &net_rules_set);	
+    var_proc_create("net_rules", proc_osec, &net_rules_set);	
+#if TCP_ECN_FEATURE == 1
+    var_proc_create("tcp_force_ecn", proc_osec, &tcp_force_ecn_set);
+#endif
     var_proc_create("business_ports", proc_osec, &business_ports_rules_set);
 
     //rwlock_init(&g_ntcp_policy_lock);
@@ -3136,8 +3129,10 @@ int network_dos_exit(void)
         kfree(policy);
     }
     var_proc_remove("business_ports", proc_osec);
-	var_proc_remove("net_rules", proc_osec);
-
+    var_proc_remove("net_rules", proc_osec);
+#if TCP_ECN_FEATURE == 1
+    var_proc_remove("tcp_force_ecn", proc_osec);
+#endif
     LOG_INFO("DRIVER NET WATER EXIT MODULE\n");
     uc_init = 0;
     return 0;
