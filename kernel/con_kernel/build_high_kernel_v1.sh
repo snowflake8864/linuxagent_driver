@@ -2,15 +2,11 @@
 set -u
 cd "$(dirname "$0")"
 
-# 不设置全局 CC，交给 build_one.sh 按 KVER 自动选
-# 如需强制本环境统一用某个 GCC：CC=gcc-11 bash build_high_kernel_v1.sh
-
-OUT_DIR=${OUT_DIR:-output_ecn}
 KROOT=/root/code/code/linux/kernel
 
 run() {
   local kver="$1" kpath="$2"
-  bash build_one.sh "$kver" "$kpath" "$OUT_DIR" \
+  bash build_one.sh "$kver" "$kpath" \
     && echo "OK   $kver" || echo "FAIL $kver"
 }
 
@@ -48,6 +44,7 @@ run 4.19.91-28.7.an8.x86_64        "$KROOT/4.19.91-28.7.an8.x86_64/build"
 
 # ---- 5.3 ----
 run 5.3.0-53-generic               "$KROOT/5.3.0-53-generic/build"
+
 # ---- 5.4 ----
 run 5.4.0-26-generic               "$KROOT/5.4.0-26-generic/build"
 run 5.4.0-42-generic               "$KROOT/5.4.0-42-generic/build"

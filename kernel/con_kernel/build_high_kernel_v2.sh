@@ -2,15 +2,11 @@
 set -u
 cd "$(dirname "$0")"
 
-# 不设置全局 CC，交给 build_one.sh 按 KVER 自动选
-# 如需强制本环境统一用某个 GCC：CC=gcc-13 bash build_high_kernel_v2.sh
-
-OUT_DIR=${OUT_DIR:-output_ecn}
 KROOT=/root/code/code/linux/kernel
 
 run() {
   local kver="$1" kpath="$2"
-  bash build_one.sh "$kver" "$kpath" "$OUT_DIR" \
+  bash build_one.sh "$kver" "$kpath" \
     && echo "OK   $kver" || echo "FAIL $kver"
 }
 
