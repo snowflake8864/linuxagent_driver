@@ -11,7 +11,7 @@ LSM_VERSION_BUILD=0
 USE_CR0_ASM_SYNTAX=0
 CLOSE_LSM_FORCED=0
 CR0_ASM_SYNTAX_BUILD=0
-TCP_ECN_FEATURE=1
+TCP_ECN_FEATURE=0
 ENABLE_SKB_TRY_MAKE_WRITABLE=0
 
 # 根据 TCP_ECN_FEATURE 决定输出目录和中间目录（中间件也按 ECN 分开存，互不覆盖）
@@ -150,10 +150,6 @@ endif
 
 
 
-
-
-
-
 SRC_PATH := /root/code/code/linux/kernel/$(KVER)/source
 
 ifeq ($(KVER), 5.10.0-29-amd64)  
@@ -258,8 +254,8 @@ all:
 	make $(JOBS) -I$(PWD) -C $(KPATH) M=$(PWD) modules
 	-rm -f symbols.$(KVER).txt
 	-$(KPATH)/scripts/mod/modpost -m -a -i $(KPATH)/Module.symvers -I $(PWD)/Module.symvers  -o $(PWD)/Module.symvers   $(PWD)/$(KO_NAME).o 2>symbols.$(KVER).txt
-	-awk '{print $0}' $(PWD)/symbols.$(KVER).txt
-	a=`awk '{print $0}' $(PWD)/symbols.$(KVER).txt  | grep "undefined" | grep -v "module_layout" | grep -v "struct_module" |wc -l`;echo $${a};\
+	-awk '{print $$0}' $(PWD)/symbols.$(KVER).txt
+	a=`awk '{print $$0}' $(PWD)/symbols.$(KVER).txt  | grep "undefined" | grep -v "module_layout" | grep -v "struct_module" |wc -l`;echo $${a};\
 	if [ $${a} -gt 0 ];\
 	then\
         echo "kernel Symbol not exported";\

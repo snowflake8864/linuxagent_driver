@@ -17,9 +17,9 @@ echo "[clean.sh] clean KPATH=$KPATH"
 # 1) kbuild 自己的 clean
 make -I"$PWD_DIR" -C "$KPATH" M="$PWD_DIR" clean >/dev/null 2>&1 || true
 
-# 2) 本模块在源码目录的残留
+# 2) 本模块在源码目录的残留（不碰 output*/ 里的历史版本）
 rm -f "$PWD_DIR"/osec_base.ko
-rm -f "$PWD_DIR"/osec_base.ko-*        # 兜底清历史根目录临时件（新流程不再生成）
+rm -f "$PWD_DIR"/osec_base.ko-*
 rm -f "$PWD_DIR"/symbols*.txt
 rm -f "$PWD_DIR"/static*.txt
 rm -f "$PWD_DIR"/syms*.txt
@@ -30,8 +30,9 @@ rm -f "$PWD_DIR"/Module.markers
 find "$PWD_DIR" -maxdepth 3 -name '*.o' -delete 2>/dev/null || true
 find "$PWD_DIR" -maxdepth 3 -name '.*.cmd' -delete 2>/dev/null || true
 
-# 3) 清悬空 headers 软链（上次 make 失败会残留，导致下次头文件错乱）
+# 3) 只删除“悬空”的 headers 软链，保留有效软链
 for l in /usr/src/linux-headers-*-common; do
     [ -L "$l" ] && [ ! -e "$l" ] && rm -f "$l"
 done
+
 echo "[clean.sh] done"

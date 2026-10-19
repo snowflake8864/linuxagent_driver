@@ -5,7 +5,8 @@
 # 说明:
 #   - 若调用方 export CC=xxx，则尊重调用方；
 #   - 否则按 KVER 从候选列表里选“环境里实际存在的 GCC”；
-#   - 候选列表每个分支最后都有 gcc 兜底，所以只装了 gcc（如 4.8.5）的容器也能编。
+#   - 候选列表每个分支最后都有 gcc 兜底，所以只装了 gcc（如 4.8.5）的容器也能编；
+#   - 按 OUT_DIR 反推 TCP_ECN_FEATURE 传给 make，保证 make 的 OUT_DIR 与 $OUT_DIR 一致。
 set -u
 
 KVER="$1"
@@ -87,7 +88,15 @@ try_build() {
     # 删旧产物，防止“上次残留”冒充本次成功
     rm -f "$KO"
 
-    if make KPATH="$KPATH" CC="$CC" >>"$LOG" 2>&1; then
+    # 按 OUT_DIR 反推 TCP_ECN_FEATURE，保证 make 的 OUT_DIR 与 $OUT_DIR 一致
+    local ECN_FLAG
+    if [ "$OUT_DIR" = "output_ecn" ]; then
+        ECN_FLAG=1
+    else
+        ECN_FLAG=0
+    fi
+
+    if make KPATH="$KPATH" CC="$CC" TCP_ECN_FEATURE="$ECN_FLAG" >>"$LOG" 2>&1; then
         if [ -f "$KO" ] && [ -s "$KO" ]; then
             return 0
         else
