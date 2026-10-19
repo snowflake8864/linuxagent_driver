@@ -31,6 +31,7 @@ find "$PWD_DIR" -maxdepth 3 -name '*.o' -delete 2>/dev/null || true
 find "$PWD_DIR" -maxdepth 3 -name '.*.cmd' -delete 2>/dev/null || true
 
 # 3) 清悬空 headers 软链（上次 make 失败会残留，导致下次头文件错乱）
-rm -f /usr/src/linux-headers-*-common 2>/dev/null || true
-
+for l in /usr/src/linux-headers-*-common; do
+    [ -L "$l" ] && [ ! -e "$l" ] && rm -f "$l"
+done
 echo "[clean.sh] done"

@@ -2,7 +2,10 @@
 # usage: bash build_one.sh <KVER> <KPATH> [out_dir]
 # 成功: 产物在 <out_dir>/osec_base.ko-<KVER>，删除单版本日志，返回 0
 # 失败: 保留 build_one.<KVER>.log，返回 1
-# 说明: 若调用方已 export CC，则尊重调用方；否则按 KVER 自动选环境里存在的 GCC。
+# 说明:
+#   - 若调用方 export CC=xxx，则尊重调用方；
+#   - 否则按 KVER 从候选列表里选“环境里实际存在的 GCC”；
+#   - 候选列表每个分支最后都有 gcc 兜底，所以只装了 gcc（如 4.8.5）的容器也能编。
 set -u
 
 KVER="$1"
@@ -28,18 +31,24 @@ mkdir -p "$OUT_DIR"
 
 # ============================================================
 # 按 KVER 选 GCC：候选列表从上到下取第一个环境里存在的
-# 若调用方已 export CC，则直接用调用方的 CC
+# 每个分支最后都有 gcc 兜底，只有 gcc 的容器也能选到
 # ============================================================
 pick_cc() {
     local kver="$1"
     local candidates=()
     case "$kver" in
-      6.8*|6.6*|6.5*|6.2*|6.1*|6.0*) candidates=(gcc-13 gcc-12 gcc-11 gcc) ;;
-      5.19*|5.18*|5.16*|5.15*|5.14*|5.13*|5.11*|5.10*) candidates=(gcc-12 gcc-11 gcc-13 gcc) ;;
-      5.4*|5.3*)                     candidates=(gcc-11 gcc-12 gcc-9 gcc) ;;
-      4.*)                           candidates=(gcc-9 gcc-11 gcc-12 gcc) ;;
-      3.*|2.*)                       candidates=(gcc-9 gcc-11 gcc) ;;
-      *)                             candidates=(gcc gcc-12 gcc-11 gcc-13 gcc-9) ;;
+      6.8*|6.6*|6.5*|6.2*|6.1*|6.0*)
+        candidates=(gcc-13 gcc-12 gcc-11 gcc) ;;
+      5.19*|5.18*|5.16*|5.15*|5.14*|5.13*|5.11*|5.10*)
+        candidates=(gcc-12 gcc-11 gcc-13 gcc) ;;
+      5.4*|5.3*)
+        candidates=(gcc-11 gcc-12 gcc-9 gcc) ;;
+      4.*)
+        candidates=(gcc-9 gcc-11 gcc-12 gcc) ;;
+      3.*|2.*)
+        candidates=(gcc-9 gcc-11 gcc) ;;
+      *)
+        candidates=(gcc gcc-12 gcc-11 gcc-13 gcc-9) ;;
     esac
     local c
     for c in "${candidates[@]}"; do
@@ -51,6 +60,7 @@ pick_cc() {
     return 1
 }
 
+# 调用方已 export CC 则尊重；否则自动选
 if [ -z "${CC:-}" ]; then
     CC=$(pick_cc "$KVER") || true
 fi
@@ -77,7 +87,7 @@ try_build() {
     # 删旧产物，防止“上次残留”冒充本次成功
     rm -f "$KO"
 
-    if make KPATH="$KPATH" >>"$LOG" 2>&1; then
+    if make KPATH="$KPATH" CC="$CC" >>"$LOG" 2>&1; then
         if [ -f "$KO" ] && [ -s "$KO" ]; then
             return 0
         else

@@ -3,7 +3,7 @@ set -u
 cd "$(dirname "$0")"
 
 # 本环境 GCC（按镜像实际装了的写）
-export CC=${CC:-gcc-9}
+#export CC=${CC:-gcc-9}
 
 OUT_DIR=${OUT_DIR:-output_ecn}
 KROOT=/root/code/code/linux/kernel
