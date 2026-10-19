@@ -1,4 +1,3 @@
-
 .PHONY: all simple clean
 
 DEBUG = 0
@@ -13,6 +12,13 @@ USE_CR0_ASM_SYNTAX=0
 CLOSE_LSM_FORCED=0
 CR0_ASM_SYNTAX_BUILD=0
 TCP_ECN_FEATURE=1
+
+# 根据 TCP_ECN_FEATURE 决定输出目录
+ifeq ($(TCP_ECN_FEATURE), 1)
+    OUT_DIR := output_ecn
+else
+    OUT_DIR := output
+endif
 
 ifeq ($(KVER), )
 	KVER = $(shell uname -r)
@@ -225,6 +231,7 @@ JOBS=-j$(shell awk 'BEGIN{print ('2'*'$(shell nproc)')}')
 	fi  
 all: 
 	echo "$(KVER)"
+	mkdir -p $(OUT_DIR)
 	ln -sf $(SRC_PATH) $(DST_PATH)
 	make $(JOBS) -I$(PWD) -C $(KPATH) M=$(PWD) modules
 	-rm symbols.txt
@@ -235,23 +242,23 @@ all:
 	then\
         echo "kernel Symbol not exported";\
 	strip --strip-debug $(KO_NAME).ko;\
-	cp $(KO_NAME).ko output/$(KO_NAME).ko-$(KVER);\
+	cp $(KO_NAME).ko $(OUT_DIR)/$(KO_NAME).ko-$(KVER);\
 	rm -f $(DST_PATH); \
         exit 1;\
 	fi
 ifeq ($(DEBUG), 1)
-	-cp $(KO_NAME).ko output/$(KO_NAME).ko-$(KVER)
+	-cp $(KO_NAME).ko $(OUT_DIR)/$(KO_NAME).ko-$(KVER)
 else
 	-strip --strip-debug $(KO_NAME).ko
 	-cp $(KO_NAME).ko $(KO_NAME).ko-$(KVER)
 	-nm $(KO_NAME).ko | awk '{if ($$2 == "t" || $$2 == "b" || $$2 == "d" || $$2 == "r") {print $$3}}' | egrep -v '^\..*' > static.txt
 	-nm $(KO_NAME).ko | awk '{if ($$2 == "B" || $$2 == "T" || $$2 == "D" || $$2 == "R") {print $$3}}' | egrep -v '^\..*' | xargs -I {} bash -c 'printf {}" ";echo {} | md5sum | egrep -o "^.{16}" | head -n 1' | awk '{print $$1" "$$2}' > syms.txt
-	-objcopy --strip-symbols=static.txt --redefine-syms=syms.txt $(KO_NAME).ko output/$(KO_NAME).ko-$(KVER) 2>errors.txt
-	-if [ ! -f $(PWD)/output/$(KO_NAME).ko-$(KVER) ];\
+	-objcopy --strip-symbols=static.txt --redefine-syms=syms.txt $(KO_NAME).ko $(OUT_DIR)/$(KO_NAME).ko-$(KVER) 2>errors.txt
+	-if [ ! -f $(PWD)/$(OUT_DIR)/$(KO_NAME).ko-$(KVER) ];\
 	then\
 		echo "$(KO_NAME).ko-$(KVER) Encryption failed,again";\
 		awk -F '`' '{print $$2}'  $(PWD)/errors.txt | awk -F "'" '{print $$1'} | xargs -I {} sed -r -i 's/^{}$///g' static.txt ;\
-		objcopy --strip-symbols=static.txt --redefine-syms=syms.txt $(KO_NAME).ko output/$(KO_NAME).ko-$(KVER);\
+		objcopy --strip-symbols=static.txt --redefine-syms=syms.txt $(KO_NAME).ko $(OUT_DIR)/$(KO_NAME).ko-$(KVER);\
 	else\
 		echo "$(KO_NAME).ko-$(KVER) Encrypted successfully";\
 	fi
@@ -261,11 +268,12 @@ endif
 	-rm -f $(DST_PATH)
 simple: 
 	echo "$(KVER)"
+	mkdir -p $(OUT_DIR)
 	ln -sf $(SRC_PATH) $(DST_PATH)
 	make $(JOBS) -I$(PWD) -C $(KPATH) M=$(PWD) modules
 	-strip --strip-debug $(KO_NAME).ko
 	-cp $(KO_NAME).ko $(KO_NAME).ko-$(KVER)
-	-cp $(KO_NAME).ko output/$(KO_NAME).ko-$(KVER)
+	-cp $(KO_NAME).ko $(OUT_DIR)/$(KO_NAME).ko-$(KVER)
 	-rm -f $(DST_PATH)
 
 
@@ -273,5 +281,6 @@ clean:
 	# -make -C ad_fake/ clean
 	make -I$(PWD) -C $(KPATH) M=$(PWD) clean
 	-rm -f $(KO_NAME).ko-$(KVER)
+	-rm -f $(OUT_DIR)/$(KO_NAME).ko-$(KVER)
 	-rm -f output/$(KO_NAME).ko-$(KVER)
 	-rm -f $(DST_PATH)
