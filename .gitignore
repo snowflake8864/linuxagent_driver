@@ -1,40 +1,66 @@
-# Compiled Object files
+# ========== Compiled Object files ==========
 *.slo
 *.lo
 *.o
 *.obj
+*.o.ur-safe
 
-# Precompiled Headers
+# ========== Precompiled Headers ==========
 *.gch
 *.pch
 
-# Compiled Dynamic libraries
+# ========== Compiled Dynamic libraries ==========
 *.so
 *.dylib
 *.dll
 *.o.d
-# Fortran module files
+
+# ========== Fortran module files ==========
 *.mod
 
-# Compiled Static libraries
+# ========== Compiled Static libraries ==========
 *.lai
 *.la
 *.a
 *.lib
 
-# Executables
+# ========== Executables ==========
 *.exe
 *.out
 *.app
 *.cmd
-MagicArmor_*
+
+# ========== Kernel module build artifacts ==========
+*.ko
+*.ko-*
 osec_base.ko*
+*.mod.c
+*.symvers
+*.order
+*.markers
+.tmp_versions/
+modules.order
+Module.symvers
+Module.markers
+.*.cmd
+
+# ========== build_one.sh / build scripts artifacts ==========
+build_one.*.log
+build_all.log
+symbols*.txt
+static*.txt
+syms*.txt
+errors*.txt
+
+# ========== Project-specific ==========
+MagicArmor_*
 common/dependlibs*
 dependlibs/*
-*.o
-*.cmd
-output
+output/
+output_ecn/
+Makefile.txt
 
+# ========== Cache / IDE ==========
 Cache/*
 CachedData/*
 clp/*
@@ -77,18 +103,19 @@ User/globalStorage/state.vscdb.backup
 CachedProfilesData/__default__profile__/extensions.builtin.cache
 backend/test
 CachedProfilesData/__default__profile__/extensions.user.cache
-kernel/con_kernel/modules.order
+Backups
+User/globalStorage/mhutchie.git-graph/life-cycle.json
+
+# ========== kernel/con_kernel 中间产物（保留原规则，避免改变现有行为） ==========
 kernel/con_kernel/modules.order
 kernel/con_kernel/osec_base.mod.c
 kernel/con_kernel/.cache.mk
-kernel/con_kernel/modules.order
 kernel/con_kernel/core/flag_cache.o.ur-safe
 kernel/con_kernel/hold/ksyscall_hold.o.ur-safe
 kernel/con_kernel/netlink/netlink.o.ur-safe
 kernel/con_kernel/utils/kosecs_core.o.ur-safe
-kernel/con_kernel/modules.order
-Backups
-User/globalStorage/mhutchie.git-graph/life-cycle.json
+
+# ========== Packaging ==========
 package/deb/packdir/opt/osec/net_info_ver.ini
 package/deb/packdir/DEBIAN/control
 build_x64.sh

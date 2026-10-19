@@ -12,12 +12,15 @@ USE_CR0_ASM_SYNTAX=0
 CLOSE_LSM_FORCED=0
 CR0_ASM_SYNTAX_BUILD=0
 TCP_ECN_FEATURE=1
+ENABLE_SKB_TRY_MAKE_WRITABLE=0
 
-# 根据 TCP_ECN_FEATURE 决定输出目录
+# 根据 TCP_ECN_FEATURE 决定输出目录和中间目录（中间件也按 ECN 分开存，互不覆盖）
 ifeq ($(TCP_ECN_FEATURE), 1)
     OUT_DIR := output_ecn
+    TMP_DIR := output_tmp_ecn
 else
     OUT_DIR := output
+    TMP_DIR := output_tmp
 endif
 
 ifeq ($(KVER), )
@@ -130,6 +133,22 @@ ifeq ($(filter $(KVER), $(SPEC_VERSIONS_SIX)), $(KVER))
 endif
 
 
+ENABLE_SKB_TRY_MAKE_WRITABLE_VERSIONS = \
+    3.10.0-123.el7.x86_64 \
+    3.10.0-229.el7.x86_64 \
+    3.10.0-327.el7.x86_64 \
+    3.10.0-514.el7.x86_64 \
+    3.10.0-693.el7.x86_64 \
+    3.10.0-693.2.2.el7.x86_64 \
+    3.12.11-201.nk.1.x86_64 \
+    4.4.13-200.nd7.1.x86_64 \
+    4.4.0-21-generic
+
+ifeq ($(filter $(KVER), $(ENABLE_SKB_TRY_MAKE_WRITABLE_VERSIONS)), $(KVER))
+    ENABLE_SKB_TRY_MAKE_WRITABLE=1
+endif
+
+
 
 
 
@@ -168,11 +187,12 @@ EXTRA_CFLAGS += -DCOMPILER="\"${CC}\""
 EXTRA_CFLAGS += -I$(src)/
 EXTRA_CFLAGS += -I$(src)/$(KVDDIR)/
 EXTRA_CFLAGS += -I$(src)/../../common/kernel/
-EXTRA_CFLAGS += -DSPEC_VERSION_BUILD=${SPEC_VERSION_BUILD}  # 添加SPEC_VERSION_BUILD
-EXTRA_CFLAGS += -DLSM_VERSION_BUILD=${LSM_VERSION_BUILD}  # 添加LSM_VERSION_BUILD
+EXTRA_CFLAGS += -DSPEC_VERSION_BUILD=${SPEC_VERSION_BUILD}
+EXTRA_CFLAGS += -DLSM_VERSION_BUILD=${LSM_VERSION_BUILD}
 EXTRA_CFLAGS += -DCR0_ASM_SYNTAX_BUILD=${CR0_ASM_SYNTAX_BUILD}
-EXTRA_CFLAGS += -DCLOSE_LSM_FORCED=${CLOSE_LSM_FORCED}  # 添加CLOSE_LSM_FORCED
-EXTRA_CFLAGS += -DTCP_ECN_FEATURE=${TCP_ECN_FEATURE}  
+EXTRA_CFLAGS += -DCLOSE_LSM_FORCED=${CLOSE_LSM_FORCED}
+EXTRA_CFLAGS += -DTCP_ECN_FEATURE=${TCP_ECN_FEATURE}
+EXTRA_CFLAGS += -DENABLE_SKB_TRY_MAKE_WRITABLE=${ENABLE_SKB_TRY_MAKE_WRITABLE}
 
 
 ifeq ($(DEBUG), 1)
@@ -187,7 +207,8 @@ ifneq ($(NAME), )
 endif
 
 
-EXTRA_CFLAGS += -pie -Wno-multichar
+# 去掉 -pie，避免部分 GCC/内核组合偶发报错；保留 -Wno-multichar
+EXTRA_CFLAGS += -Wno-multichar
 EXTRA_CFLAGS += $(PC_DEFINE)
 
 
@@ -232,47 +253,49 @@ JOBS=-j$(shell awk 'BEGIN{print ('2'*'$(shell nproc)')}')
 all: 
 	echo "$(KVER)"
 	mkdir -p $(OUT_DIR)
+	mkdir -p $(TMP_DIR)
 	ln -sf $(SRC_PATH) $(DST_PATH)
 	make $(JOBS) -I$(PWD) -C $(KPATH) M=$(PWD) modules
-	-rm symbols.txt
-	-$(KPATH)/scripts/mod/modpost -m -a -i $(KPATH)/Module.symvers -I $(PWD)/Module.symvers  -o $(PWD)/Module.symvers   $(PWD)/$(KO_NAME).o 2>symbols.txt
-	-awk '{print $0}' $(PWD)/symbols.txt
-	a=`awk '{print $0}' $(PWD)/symbols.txt  | grep "undefined" | grep -v "module_layout" | grep -v "struct_module" |wc -l`;echo $${a};\
+	-rm -f symbols.$(KVER).txt
+	-$(KPATH)/scripts/mod/modpost -m -a -i $(KPATH)/Module.symvers -I $(PWD)/Module.symvers  -o $(PWD)/Module.symvers   $(PWD)/$(KO_NAME).o 2>symbols.$(KVER).txt
+	-awk '{print $0}' $(PWD)/symbols.$(KVER).txt
+	a=`awk '{print $0}' $(PWD)/symbols.$(KVER).txt  | grep "undefined" | grep -v "module_layout" | grep -v "struct_module" |wc -l`;echo $${a};\
 	if [ $${a} -gt 0 ];\
 	then\
         echo "kernel Symbol not exported";\
-	strip --strip-debug $(KO_NAME).ko;\
-	cp $(KO_NAME).ko $(OUT_DIR)/$(KO_NAME).ko-$(KVER);\
 	rm -f $(DST_PATH); \
+	rm -f symbols.$(KVER).txt; \
         exit 1;\
 	fi
 ifeq ($(DEBUG), 1)
+	-cp $(KO_NAME).ko $(TMP_DIR)/$(KO_NAME).ko-$(KVER)
 	-cp $(KO_NAME).ko $(OUT_DIR)/$(KO_NAME).ko-$(KVER)
 else
 	-strip --strip-debug $(KO_NAME).ko
-	-cp $(KO_NAME).ko $(KO_NAME).ko-$(KVER)
-	-nm $(KO_NAME).ko | awk '{if ($$2 == "t" || $$2 == "b" || $$2 == "d" || $$2 == "r") {print $$3}}' | egrep -v '^\..*' > static.txt
-	-nm $(KO_NAME).ko | awk '{if ($$2 == "B" || $$2 == "T" || $$2 == "D" || $$2 == "R") {print $$3}}' | egrep -v '^\..*' | xargs -I {} bash -c 'printf {}" ";echo {} | md5sum | egrep -o "^.{16}" | head -n 1' | awk '{print $$1" "$$2}' > syms.txt
-	-objcopy --strip-symbols=static.txt --redefine-syms=syms.txt $(KO_NAME).ko $(OUT_DIR)/$(KO_NAME).ko-$(KVER) 2>errors.txt
+	-cp $(KO_NAME).ko $(TMP_DIR)/$(KO_NAME).ko-$(KVER)
+	-nm $(KO_NAME).ko | awk '{if ($$2 == "t" || $$2 == "b" || $$2 == "d" || $$2 == "r") {print $$3}}' | egrep -v '^\..*' > static.$(KVER).txt
+	-nm $(KO_NAME).ko | awk '{if ($$2 == "B" || $$2 == "T" || $$2 == "D" || $$2 == "R") {print $$3}}' | egrep -v '^\..*' | xargs -I {} bash -c 'printf {}" ";echo {} | md5sum | egrep -o "^.{16}" | head -n 1' | awk '{print $$1" "$$2}' > syms.$(KVER).txt
+	-objcopy --strip-symbols=static.$(KVER).txt --redefine-syms=syms.$(KVER).txt $(KO_NAME).ko $(OUT_DIR)/$(KO_NAME).ko-$(KVER) 2>errors.$(KVER).txt
 	-if [ ! -f $(PWD)/$(OUT_DIR)/$(KO_NAME).ko-$(KVER) ];\
 	then\
 		echo "$(KO_NAME).ko-$(KVER) Encryption failed,again";\
-		awk -F '`' '{print $$2}'  $(PWD)/errors.txt | awk -F "'" '{print $$1'} | xargs -I {} sed -r -i 's/^{}$///g' static.txt ;\
-		objcopy --strip-symbols=static.txt --redefine-syms=syms.txt $(KO_NAME).ko $(OUT_DIR)/$(KO_NAME).ko-$(KVER);\
+		awk -F '`' '{print $$2}'  $(PWD)/errors.$(KVER).txt | awk -F "'" '{print $$1'} | xargs -I {} sed -r -i 's/^{}$$//g' static.$(KVER).txt ;\
+		objcopy --strip-symbols=static.$(KVER).txt --redefine-syms=syms.$(KVER).txt $(KO_NAME).ko $(OUT_DIR)/$(KO_NAME).ko-$(KVER);\
 	else\
 		echo "$(KO_NAME).ko-$(KVER) Encrypted successfully";\
 	fi
-	-rm static.txt syms.txt errors.txt
+	-rm -f static.$(KVER).txt syms.$(KVER).txt errors.$(KVER).txt
 endif
-	-rm symbols.txt
+	-rm -f symbols.$(KVER).txt
 	-rm -f $(DST_PATH)
 simple: 
 	echo "$(KVER)"
 	mkdir -p $(OUT_DIR)
+	mkdir -p $(TMP_DIR)
 	ln -sf $(SRC_PATH) $(DST_PATH)
 	make $(JOBS) -I$(PWD) -C $(KPATH) M=$(PWD) modules
 	-strip --strip-debug $(KO_NAME).ko
-	-cp $(KO_NAME).ko $(KO_NAME).ko-$(KVER)
+	-cp $(KO_NAME).ko $(TMP_DIR)/$(KO_NAME).ko-$(KVER)
 	-cp $(KO_NAME).ko $(OUT_DIR)/$(KO_NAME).ko-$(KVER)
 	-rm -f $(DST_PATH)
 
@@ -282,5 +305,12 @@ clean:
 	make -I$(PWD) -C $(KPATH) M=$(PWD) clean
 	-rm -f $(KO_NAME).ko-$(KVER)
 	-rm -f $(OUT_DIR)/$(KO_NAME).ko-$(KVER)
+	-rm -f $(TMP_DIR)/$(KO_NAME).ko-$(KVER)
 	-rm -f output/$(KO_NAME).ko-$(KVER)
+	-rm -f output_ecn/$(KO_NAME).ko-$(KVER)
+	-rm -f output_tmp/$(KO_NAME).ko-$(KVER)
+	-rm -f output_tmp_ecn/$(KO_NAME).ko-$(KVER)
+	# 清掉带 KVER 的临时文件，避免残留
+	-rm -f symbols.$(KVER).txt static.$(KVER).txt syms.$(KVER).txt errors.$(KVER).txt
+	-rm -f symbols.txt static.txt syms.txt errors.txt
 	-rm -f $(DST_PATH)

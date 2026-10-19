@@ -2164,7 +2164,7 @@ static int netdos_tcp_out(struct sk_buff* skb,struct iphdr* iph, uint32_t u_type
 #endif
 
 /* skb_try_make_writable 在约 3.0 内核引入，旧内核手动实现等价逻辑 */
-#if LINUX_VERSION_CODE < KERNEL_VERSION(2, 7, 0)
+#if LINUX_VERSION_CODE < KERNEL_VERSION(2, 7, 0) || ENABLE_SKB_TRY_MAKE_WRITABLE == 1
 static inline int skb_try_make_writable(struct sk_buff *skb,
                                         unsigned int write_len)
 {
