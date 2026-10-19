@@ -46,6 +46,8 @@ run 4.19.91-27.1.an7.x86_64        "$KROOT/4.19.91-27.1.an7.x86_64/build"
 run 4.19.91-28.2.al7.x86_64        "$KROOT/4.19.91-28.2.al7.x86_64/build"
 run 4.19.91-28.7.an8.x86_64        "$KROOT/4.19.91-28.7.an8.x86_64/build"
 
+# ---- 5.3 ----
+run 5.3.0-53-generic               "$KROOT/5.3.0-53-generic/build"
 # ---- 5.4 ----
 run 5.4.0-26-generic               "$KROOT/5.4.0-26-generic/build"
 run 5.4.0-42-generic               "$KROOT/5.4.0-42-generic/build"
